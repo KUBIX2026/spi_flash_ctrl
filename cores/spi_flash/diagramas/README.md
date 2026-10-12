@@ -169,7 +169,7 @@ sequenceDiagram
 
 | Fase | MOSI (FPGA → Flash) | MISO (Flash → FPGA) |
 |------|---------------------|---------------------|
-| Comando | `03h` | X (no importa) |
+| Comando | `0x03` | X (no importa) |
 | Dirección | A23..A0 (24 bits) | X (no importa) |
 | Datos | (no se usa) | D0, D1, D2, D3… |
 
@@ -184,7 +184,7 @@ sequenceDiagram
 #### 3.4.1 Secuencia
 
 1. **CS baja.**
-2. Enviar `0Bh` por MOSI.
+2. Enviar `0x03` por MOSI.
 3. Enviar **dirección de 24 bits**.
 4. Enviar **1 byte dummy** (8 ciclos de reloj, MISO ignorado).
 5. La Flash devuelve datos por MISO.
