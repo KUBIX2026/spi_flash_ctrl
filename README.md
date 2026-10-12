@@ -352,7 +352,7 @@ El diagrama de flujo utilizado para representar esta secuencia se encuentra en l
 
 ---
 
-#6. Información extra
+# 6. Información extra
 
 ### Estructura del repo
 
