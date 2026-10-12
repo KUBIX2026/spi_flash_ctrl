@@ -1,20 +1,3 @@
-
-## Controlador SPI Flash — Proyecto FPGA Digital 1
-
-### Estructura del repo
-
-- `cores/spi_flash/diagramas/` — diagramas de flujo, bloques y protocolo de comunicación
-- `cores/spi_flash/rtl/` — código Verilog y testbenches (en desarrollo)
-- `cores/spi_flash/firmware/` — driver en C del módulo (en desarrollo)
-
-### Equipo
-
-- Jhon Dairon Canizalez Arias
-- Edwin Franco Sanchez
-- Carlos Alfonso Mahecha Gonzalez
-
-ÑÑÑÑ
-
 # Protocolo SPI
 
 ## 1. Explicación general del protocolo
@@ -368,6 +351,21 @@ El diagrama de flujo utilizado para representar esta secuencia se encuentra en l
 
 
 ---
+
+#6. Información extra
+
+### Estructura del repo
+
+- `cores/spi_flash/diagramas/` — diagramas de flujo, bloques y protocolo de comunicación
+
+### Equipo
+
+- Jhon Dairon Canizalez Arias
+- Edwin Franco Sanchez
+- Carlos Alfonso Mahecha Gonzalez
+
+
+
 
 # Esta plantilla no es de mi propiedad.
 
