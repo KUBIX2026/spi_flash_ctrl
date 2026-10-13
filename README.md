@@ -352,7 +352,19 @@ El diagrama de flujo utilizado para representar esta secuencia se encuentra en l
 
 ---
 
-# 6. Información extra
+# 6. Diagramas internos
+
+Basandonos en lo explicado en este README y considerando la arquitectura propuesta por el profesor para la comunicacion entre el RV32I y la memoria flash, este seria el diagrama de entradas y salidas de su controlador.
+
+![Diagrama de entradas y salidas](cores/spi_flash/diagramas/Diagrama_entradas_salidas.png)
+
+
+y este es un primer diagrama de la estructura interna del controlador (aun en desarrollo).
+
+![Uso práctico de los comandos de escritura y borrado](cores/spi_flash/diagramas/diagrama_interno.png)
+
+
+# 7. Información extra
 
 ### Estructura del repo
 
