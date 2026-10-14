@@ -121,8 +121,8 @@ Esta sección presenta los comandos utilizados para obtener información almacen
 
 | Código | Comando               | Descripción                     |
 | ------ | --------------------- | ------------------------------- |
-| `03h`  | READ                  | Lectura de datos                |
-| `0Bh`  | FAST READ             | Lectura rápida con ciclos dummy |
+| `0x03`  | READ                  | Lectura de datos                |
+| `0x0B`  | FAST READ             | Lectura rápida con ciclos dummy |
 
 <!--| `3Bh`  | FAST READ DUAL OUTPUT | Lectura mediante dos líneas     |
 | `BBh`  | FAST READ DUAL I/O    | Lectura Dual I/O                |
@@ -138,12 +138,12 @@ Para cada comando se incluirá:
 * Datos obtenidos mediante la lectura.
 * Forma de onda correspondiente.
 
-### 3.3 READ (03h) paso a paso
+### 3.3 READ (0x03) paso a paso
 
 #### 3.3.1 Secuencia
 
 1. **CS baja.**
-2. Enviar `03h` por MOSI.
+2. Enviar `0x03` por MOSI.
 3. Enviar **dirección de 24 bits** (3 bytes, MSB primero).
 4. La Flash empieza a devolver datos por MISO.
 5. **CS sube** al terminar.
@@ -169,7 +169,7 @@ sequenceDiagram
 
 | Fase | MOSI (FPGA → Flash) | MISO (Flash → FPGA) |
 |------|---------------------|---------------------|
-| Comando | `03h` | X (no importa) |
+| Comando | `0x03` | X (no importa) |
 | Dirección | A23..A0 (24 bits) | X (no importa) |
 | Datos | (no se usa) | D0, D1, D2, D3… |
 
@@ -179,12 +179,12 @@ sequenceDiagram
 
 <!--> Cita de clase: *"hay que tener cuidado porque ese se sobrecribe… termina a los 64 espacios y vuelve a escribir el primer
 
-### 3.4 FAST READ (0Bh) paso a paso
+### 3.4 FAST READ (0x0B) paso a paso
 
 #### 3.4.1 Secuencia
 
 1. **CS baja.**
-2. Enviar `0Bh` por MOSI.
+2. Enviar `0x03` por MOSI.
 3. Enviar **dirección de 24 bits**.
 4. Enviar **1 byte dummy** (8 ciclos de reloj, MISO ignorado).
 5. La Flash devuelve datos por MISO.
@@ -198,7 +198,7 @@ sequenceDiagram
     participant FLASH as Flash (Esclavo)
 
     Note over FPGA,FLASH: CS baja
-    FPGA->>FLASH: 0Bh
+    FPGA->>FLASH: 0x0B
     FPGA->>FLASH: A23..A0 (24 bits)
     FPGA->>FLASH: Dummy (8 ciclos)
     FLASH-->>FPGA: D0
@@ -211,7 +211,7 @@ sequenceDiagram
 
 | Fase | MOSI (FPGA → Flash) | MISO (Flash → FPGA) |
 |------|---------------------|---------------------|
-| Comando | `0Bh` | X (no importa) |
+| Comando | `0x0B` | X (no importa) |
 | Dirección | A23..A0 (24 bits) | X (no importa) |
 | Dummy | (nada) | X (8 ciclos vacíos) |
 | Datos | (no se usa) | D0, D1, D2, D3… |
@@ -264,7 +264,7 @@ Ejemplo: leer un `uint32_t` desde `0x000100`:
 
 ```
 CS baja
-→ 03h
+→ 0x03
 → 00h 01h 00h   (dirección)
 → recibes byte0, byte1, byte2, byte3
 → unes: dato = (byte0<<24)|(byte1<<16)|(byte2<<8)|byte3
@@ -282,8 +282,6 @@ CS sube
 En **I2S** la frecuencia de muestreo sí importa (44.2 kHz, 48 kHz). Si se manda el audio más rápido o más lento, se escucha mal. En **SPI** la velocidad no afecta el dato, solo el tiempo que tarda.
 
 > Cita de clase: *"Es la gran diferencia de protocolos SPI frente a todos los demás: el tiempo acá sí importa [en I2S], en los demás no."*-->
-
-
 ---
 
 # 4. Comandos de escritura y borrado
