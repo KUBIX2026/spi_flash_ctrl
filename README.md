@@ -156,7 +156,7 @@ sequenceDiagram
     participant FLASH as Flash (Esclavo)
 
     Note over FPGA,FLASH: CS baja
-    FPGA->>FLASH: 03h
+    FPGA->>FLASH: 0x03
     FPGA->>FLASH: A23..A0 (24 bits)
     FLASH-->>FPGA: D0
     FLASH-->>FPGA: D1
