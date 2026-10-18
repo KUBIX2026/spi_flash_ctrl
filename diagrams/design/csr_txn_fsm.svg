@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .state-title { font-family: 'Arial', sans-serif; font-size: 13px; font-weight: bold; fill: #333; }
+      .state-sub { font-family: 'Arial', sans-serif; font-size: 10px; fill: #666; }
+      .trans-text { font-family: 'Arial', sans-serif; font-size: 9px; fill: #333; }
+      .err-text { font-family: 'Arial', sans-serif; font-size: 9px; fill: #b85450; }
+      .footer-text { font-family: 'Arial', sans-serif; font-size: 10px; font-style: italic; fill: #666; }
+    </style>
+    <!-- Marcador de flecha negra -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#333"/>
+    </marker>
+    <!-- Marcador de flecha roja -->
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <!-- Título -->
+  <text x="450" y="28" text-anchor="middle" class="title">Transaction lifecycle — every command, same states</text>
+
+  <!-- Estados (Cajas) -->
+  <!-- IDLE -->
+  <rect x="30" y="80" width="140" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="100" y="108" text-anchor="middle" class="state-title">IDLE</text>
+  <text x="100" y="126" text-anchor="middle" class="state-sub">CS=1, SCLK=0</text>
+
+  <!-- LOAD -->
+  <rect x="220" y="80" width="140" height="60" rx="8" fill="#ffe6cc" stroke="#d79b00" stroke-width="2"/>
+  <text x="290" y="108" text-anchor="middle" class="state-title">LOAD</text>
+  <text x="290" y="126" text-anchor="middle" class="state-sub">read setup regs</text>
+
+  <!-- ACTIVE -->
+  <rect x="410" y="80" width="140" height="60" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="480" y="108" text-anchor="middle" class="state-title">ACTIVE</text>
+  <text x="480" y="126" text-anchor="middle" class="state-sub">opcode → addr → data</text>
+
+  <!-- FINISH -->
+  <rect x="600" y="80" width="140" height="60" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="670" y="108" text-anchor="middle" class="state-title">FINISH</text>
+  <text x="670" y="126" text-anchor="middle" class="state-sub">CS=1, DONE</text>
+
+  <!-- ERROR -->
+  <rect x="410" y="280" width="140" height="60" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="480" y="308" text-anchor="middle" class="state-title">ERROR</text>
+  <text x="480" y="326" text-anchor="middle" class="state-sub">CS=1, ERR</text>
+
+  <!-- Transiciones (Líneas) -->
+  <!-- IDLE -> LOAD -->
+  <line x1="170" y1="110" x2="220" y2="110" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="195" y="100" text-anchor="middle" class="trans-text">START=1</text>
+
+  <!-- LOAD -> ACTIVE -->
+  <line x1="360" y1="110" x2="410" y2="110" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="385" y="100" text-anchor="middle" class="trans-text">CS low</text>
+
+  <!-- ACTIVE -> FINISH -->
+  <line x1="550" y1="110" x2="600" y2="110" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="575" y="100" text-anchor="middle" class="trans-text">LEN bytes done</text>
+
+  <!-- FINISH -> IDLE (Ruta por arriba) -->
+  <path d="M 670,80 L 670,40 L 100,40 L 100,80" fill="none" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="385" y="30" text-anchor="middle" class="trans-text">DONE=1 cleared / new START waits</text>
+
+  <!-- ACTIVE -> ERROR (Línea vertical recta) -->
+  <line x1="480" y1="140" x2="480" y2="280" stroke="#b85450" stroke-width="2" marker-end="url(#arrowRed)"/>
+  
+  <!-- Texto de error (lado derecho de la línea) -->
+  <text x="495" y="180" text-anchor="start" class="err-text">err condition</text>
+  <text x="495" y="195" text-anchor="start" class="err-text">(CMD reserved,</text>
+  <text x="495" y="210" text-anchor="start" class="err-text">FIFO under/overflow,</text>
+  <text x="495" y="225" text-anchor="start" class="err-text">LEN=0)</text>
+
+  <!-- ERROR -> IDLE (Ruta por abajo) -->
+  <path d="M 480,340 L 480,370 L 100,370 L 100,140" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="290" y="360" text-anchor="middle" class="err-text">ERR=1 cleared on STATUS read</text>
+
+  <!-- Notas finales -->
+  <text x="450" y="400" text-anchor="middle" class="footer-text">IDLE waits for CTRL.START. LOAD preloads the first bit from setup registers.</text>
+  <text x="450" y="416" text-anchor="middle" class="footer-text">ACTIVE shifts bytes per command. FINISH or ERROR returns to IDLE.</text>
+  
+</svg>
