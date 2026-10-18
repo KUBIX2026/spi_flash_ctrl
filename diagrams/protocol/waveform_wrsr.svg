@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .signal-label { font-family: 'Arial', sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+      .note-text { font-family: 'Arial', sans-serif; font-size: 9px; fill: #666; }
+      .bit-val { font-family: 'Arial', sans-serif; font-size: 10px; fill: #333; }
+      .box-text { font-family: 'Arial', sans-serif; font-size: 13px; font-weight: bold; fill: #333; }
+      .footer-text { font-family: 'Arial', sans-serif; font-size: 10px; fill: #666; }
+    </style>
+  </defs>
+
+  <!-- Título -->
+  <text x="450" y="25" text-anchor="middle" class="title">WRSR — Write Status Register (01h)</text>
+
+  <!-- Etiquetas de las señales -->
+  <text x="15" y="85" class="signal-label">CS</text>
+  <text x="15" y="170" class="signal-label">CLK</text>
+  <text x="15" y="255" class="signal-label">MOSI</text>
+  <text x="15" y="375" class="signal-label">MISO</text>
+
+  <!-- Señal CS -->
+  <path d="M 100,75 L 130,75 L 130,95 L 870,95 L 870,75 L 890,75" stroke="#333" stroke-width="2" fill="none"/>
+  <text x="115" y="68" class="note-text">HIGH</text>
+  <text x="500" y="115" text-anchor="middle" class="note-text">LOW (selected) — must end on a byte boundary</text>
+
+  <!-- Señal CLK (Ajustada para terminar el último pulso correctamente) -->
+  <path d="M 100,170 L 130,170 L 130,148 L 175,148 L 175,170 L 220,170 L 220,148 L 265,148 L 265,170 L 310,170 L 310,148 L 355,148 L 355,170 L 400,170 L 400,148 L 445,148 L 445,170 L 490,170 L 490,148 L 535,148 L 535,170 L 580,170 L 580,148 L 625,148 L 625,170 L 670,170 L 670,148 L 715,148 L 715,170 L 760,170 L 760,148 L 805,148 L 805,170 L 850,170 L 850,148 L 870,148 L 870,170" stroke="#333" stroke-width="2" fill="none"/>
+
+  <!-- Líneas verticales de tiempo (En el fondo para no cruzar los bloques) -->
+  <g stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,3">
+    <line x1="130" y1="215" x2="130" y2="315" />
+    <line x1="175" y1="215" x2="175" y2="315" />
+    <line x1="220" y1="215" x2="220" y2="315" />
+    <line x1="265" y1="215" x2="265" y2="315" />
+    <line x1="310" y1="215" x2="310" y2="315" />
+    <line x1="355" y1="215" x2="355" y2="315" />
+    <line x1="400" y1="215" x2="400" y2="315" />
+    <line x1="445" y1="215" x2="445" y2="315" />
+    <line x1="490" y1="215" x2="490" y2="315" />
+    <line x1="535" y1="215" x2="535" y2="315" />
+    <line x1="580" y1="215" x2="580" y2="315" />
+    <line x1="625" y1="215" x2="625" y2="315" />
+    <line x1="670" y1="215" x2="670" y2="315" />
+    <line x1="715" y1="215" x2="715" y2="315" />
+    <line x1="760" y1="215" x2="760" y2="315" />
+    <line x1="805" y1="215" x2="805" y2="315" />
+    <line x1="850" y1="215" x2="850" y2="315" />
+    <line x1="870" y1="215" x2="870" y2="315" />
+  </g>
+
+  <!-- Datos MOSI (Opcode 01h) -->
+  <rect x="130" y="240" width="405" height="30" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="332.5" y="260" text-anchor="middle" class="box-text">01h (opcode)</text>
+
+  <!-- Valores de los bits del Opcode (centrados en los ciclos de reloj) -->
+  <text x="152.5" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="197.5" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="242.5" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="287.5" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="332.5" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="377.5" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="422.5" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="467.5" y="288" text-anchor="middle" class="bit-val">1</text>
+
+  <!-- Datos MOSI (Registro de Estado) -->
+  <rect x="535" y="240" width="335" height="30" fill="#ffe6cc" stroke="#d79b00" stroke-width="1.5"/>
+  <text x="702.5" y="260" text-anchor="middle" class="box-text">New Status Register 1 byte (S7…S0)</text>
+
+  <!-- Señal MISO -->
+  <line x1="100" y1="370" x2="870" y2="370" stroke="#999" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="485" y="390" text-anchor="middle" class="footer-text">High-Z (Flash never drives MISO during WRSR)</text>
+
+  <!-- Nota final -->
+  <text x="450" y="428" text-anchor="middle" class="footer-text" font-style="italic">Requires a preceding WREN. Must end on a byte boundary. MISO stays high-Z for the whole transaction.</text>
+  
+</svg>

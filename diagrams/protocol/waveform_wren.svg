@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .signal-label { font-family: 'Arial', sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+      .note-text { font-family: 'Arial', sans-serif; font-size: 9px; fill: #666; }
+      .bit-val { font-family: 'Arial', sans-serif; font-size: 10px; fill: #333; }
+      .bit-lbl { font-family: 'Arial', sans-serif; font-size: 8px; fill: #888; }
+      .footer-text { font-family: 'Arial', sans-serif; font-size: 10px; fill: #666; }
+    </style>
+  </defs>
+
+  <!-- Título -->
+  <text x="360" y="25" text-anchor="middle" class="title">WREN — Write Enable (06h)</text>
+
+  <!-- Etiquetas de las señales -->
+  <text x="15" y="85" class="signal-label">CS</text>
+  <text x="15" y="170" class="signal-label">CLK</text>
+  <text x="15" y="255" class="signal-label">MOSI</text>
+  <text x="15" y="365" class="signal-label">MISO</text>
+
+  <!-- Señal CS -->
+  <path d="M 100,75 L 150,75 L 150,95 L 590,95 L 590,75 L 660,75" stroke="#333" stroke-width="2" fill="none"/>
+  <text x="120" y="68" class="note-text">HIGH</text>
+  <text x="370" y="115" text-anchor="middle" class="note-text">LOW (selected)</text>
+
+  <!-- Señal CLK -->
+  <path d="M 100,170 L 150,170 L 150,145 L 175,145 L 175,170 L 200,170 L 200,145 L 225,145 L 225,170 L 250,170 L 250,145 L 275,145 L 275,170 L 300,170 L 300,145 L 325,145 L 325,170 L 350,170 L 350,145 L 375,145 L 375,170 L 400,170 L 400,145 L 425,145 L 425,170 L 450,170 L 450,145 L 475,145 L 475,170 L 500,170 L 500,145 L 525,145 L 525,170 L 550,170 L 550,145 L 575,145 L 575,170 L 590,170 L 660,170" stroke="#333" stroke-width="2" fill="none"/>
+  <text x="120" y="190" class="note-text">idle low</text>
+
+  <!-- Líneas verticales de tiempo (Acortadas a y=315 para un mejor aspecto) -->
+  <g stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,3">
+    <line x1="150" y1="215" x2="150" y2="315" />
+    <line x1="200" y1="215" x2="200" y2="315" />
+    <line x1="250" y1="215" x2="250" y2="315" />
+    <line x1="300" y1="215" x2="300" y2="315" />
+    <line x1="350" y1="215" x2="350" y2="315" />
+    <line x1="400" y1="215" x2="400" y2="315" />
+    <line x1="450" y1="215" x2="450" y2="315" />
+    <line x1="500" y1="215" x2="500" y2="315" />
+  </g>
+
+  <!-- Datos MOSI (Opcode 06h) -->
+  <rect x="150" y="240" width="400" height="30" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="350" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333">06h</text>
+
+  <!-- Valores de los bits -->
+  <text x="175" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="225" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="275" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="325" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="375" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="425" y="288" text-anchor="middle" class="bit-val">1</text>
+  <text x="475" y="288" text-anchor="middle" class="bit-val">1</text>
+  <text x="525" y="288" text-anchor="middle" class="bit-val">0</text>
+
+  <!-- Etiquetas de los bits (b7 a b0) -->
+  <text x="175" y="305" text-anchor="middle" class="bit-lbl">b7</text>
+  <text x="225" y="305" text-anchor="middle" class="bit-lbl">b6</text>
+  <text x="275" y="305" text-anchor="middle" class="bit-lbl">b5</text>
+  <text x="325" y="305" text-anchor="middle" class="bit-lbl">b4</text>
+  <text x="375" y="305" text-anchor="middle" class="bit-lbl">b3</text>
+  <text x="425" y="305" text-anchor="middle" class="bit-lbl">b2</text>
+  <text x="475" y="305" text-anchor="middle" class="bit-lbl">b1</text>
+  <text x="525" y="305" text-anchor="middle" class="bit-lbl">b0</text>
+
+  <!-- Señal MISO -->
+  <line x1="100" y1="360" x2="660" y2="360" stroke="#999" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="380" y="380" text-anchor="middle" class="footer-text">High-Z (Flash not driving)</text>
+
+  <!-- Nota final -->
+  <text x="360" y="408" text-anchor="middle" class="footer-text" font-style="italic">CS: high → low → high. Opcode 06h shifted MSB-first. No data returned.</text>
+  
+</svg>
