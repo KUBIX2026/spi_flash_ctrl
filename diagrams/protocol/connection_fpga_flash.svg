@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <!-- Ajustamos refX a 10 para que la punta de la flecha coincida exactamente con el final de la línea -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Título -->
+  <text x="320" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#333">Physical connection: FPGA ↔ SPI Flash</text>
+
+  <!-- Caja FPGA -->
+  <rect x="40" y="70" width="180" height="220" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="130" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#111">FPGA</text>
+  <text x="130" y="182" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#555">(SPI Master)</text>
+
+  <!-- Caja SPI Flash -->
+  <rect x="420" y="70" width="180" height="220" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="510" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#111">SPI Flash</text>
+  <text x="510" y="182" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#555">(SPI Slave)</text>
+  <text x="510" y="204" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#777">W25Q128JV (ref.)</text>
+
+  <!-- Línea SCLK -->
+  <line x1="220" y1="120" x2="420" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="320" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#222">SCLK</text>
+
+  <!-- Línea MOSI -->
+  <line x1="220" y1="170" x2="420" y2="170" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="320" y="162" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#222">MOSI</text>
+
+  <!-- Línea MISO -->
+  <line x1="420" y1="220" x2="220" y2="220" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="320" y="212" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#222">MISO</text>
+
+  <!-- Línea CS -->
+  <line x1="220" y1="270" x2="420" y2="270" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="320" y="262" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#222">CS</text>
+
+  <!-- Nota inferior -->
+  <text x="320" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-style="italic" fill="#777">3.3 V and GND connect the two devices (omitted for clarity)</text>
+</svg>
