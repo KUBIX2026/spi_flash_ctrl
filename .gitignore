@@ -1,2 +1,22 @@
+# Simulation
 *.out
 *.vcd
+*.fst
+*.vvp
+*.lxt2
+*.ghw
+
+# Synthesis
+*.json
+*.asc
+*.bit
+*.bin
+
+# C / firmware
+*.o
+*.elf
+*.d
+*.map
+
+# OS
+.vscode/
