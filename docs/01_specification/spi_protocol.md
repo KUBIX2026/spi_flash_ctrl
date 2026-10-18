@@ -1,50 +1,85 @@
+[← Volver al índice de Specification](README.md) · [← Volver al README](../../README.md)
 
-## 1. Introducción
+## Contenido
 
-Este documento describe el protocolo **SPI (Serial Peripheral Interface)** aplicado a **memorias Flash**, tal como se trabajó en clase. Incluye forma física, explicación del protocolo, comandos disponibles, uso práctico de `READ` y `FAST READ`, y las preguntas resueltas que quedaron pendientes.
-
-> **Nota:** Los diagramas de trama y conexión física están en este mismo directorio. Ver la sección de enlaces al final.
+1. [Explicación general del protocolo](#1-explicación-general-del-protocolo)
+2. [Comandos de estado y control](#2-comandos-de-estado-y-control)
+3. [Comandos de lectura](#3-comandos-de-lectura)
+4. [Comandos de escritura y borrado](#4-comandos-de-escritura-y-borrado)
+5. [Diagrama de flujo general del protocolo](#5-diagrama-de-flujo-general-del-protocolo)
 
 ---
 
-## 2. ¿Qué es SPI?
+# 1. Explicación general del protocolo
 
-SPI es un protocolo de comunicación **sincrónico, serie y full-duplex**. Un dispositivo **maestro** (en nuestro caso la FPGA) controla a uno o varios **esclavos** (aquí, la memoria Flash).
+## 1.1 ¿Qué es SPI?
 
-### 2.1 Señales del bus
+SPI (**Serial Peripheral Interface**) es un protocolo de comunicación **sincrónico, serie y full-duplex**. Un dispositivo **maestro** (en nuestro caso, la FPGA) controla a uno o varios **esclavos** (en este caso, la memoria Flash).
 
-| Señal | Nombre completo | Función |
-|-------|-----------------|---------|
-| `SCLK` | Serial Clock | Reloj generado **siempre** por el maestro |
-| `MOSI` | Master Out Slave In | Datos del maestro hacia el esclavo |
-| `MISO` | Master In Slave Out | Datos del esclavo hacia el maestro |
-| `CS` / `SS` | Chip Select / Slave Select | Activo en bajo. Selecciona el esclavo |
+## 1.2 Señales del bus
 
-### 2.2 Características clave
+El protocolo cuenta con cuatro señales principales de conexión:
 
-- Es **sincrónico**: los datos se leen en flancos del reloj.
-- Es **full-duplex**: MOSI y MISO pueden trabajar al mismo tiempo.
-- El **maestro genera el reloj**. El esclavo nunca lo genera.
-- En SPI **la velocidad no es crítica** para la integridad del dato. A diferencia de I2S, se puede ir más rápido o más lento sin que el dato se corrompa, siempre que se respeten los tiempos mínimos del chip.
+| Señal       | Nombre completo            | Función                               |
+| ----------- | -------------------------- | ------------------------------------- |
+| `SCLK`      | Serial Clock               | Reloj generado por master         |
+| `MOSI`      | Master Out Slave In        | Datos de master hacia el slave    |
+| `MISO`      | Master In Slave Out        | Datos del slave hacia el master    |
+| `CS` / `SS` | Chip Select / Slave Select | Activo en bajo. Selecciona el slave |
 
-> Cita de clase: *"En un SPI, si es lento, obviamente… Puede que se demore más, pero puedo mandar los datos. Si eso cumple restricciones temporales, no importa."*
+## 1.3 Características principales
 
-### 2.3 Modos SPI (CPOL / CPHA)
+- **Protocolo sincrónico:** los datos se leen en los flancos del reloj. La configuración del flanco de lectura y el estado base del reloj determinan los cuatro modos de operación del protocolo.
+- **Comunicación full-duplex:** el protocolo soporta comunicación bidireccional simultánea mediante las líneas independientes `MOSI` y `MISO`.
+- **Generación del reloj:** la señal de reloj es generada por el maestro. El esclavo nunca genera el reloj.
+- **Estabilidad de los datos:** cuando ocurre el flanco utilizado para leer un dato, la información debe encontrarse estable.
+- **Velocidad de transmisión:** la frecuencia utilizada debe respetar los tiempos de operación establecidos para la memoria Flash.
+
+> **Nota sobre velocidad:** en SPI la velocidad de transmisión no afecta la integridad del dato en sí — solo el tiempo que tarda en llegar. A diferencia de protocolos como I2S, donde la frecuencia de muestreo debe coincidir exactamente, en SPI se puede ir más rápido o más lento siempre que se respeten los tiempos mínimos del chip esclavo.
+
+## 1.4 Modos SPI (CPOL / CPHA)
+
+La comunicación SPI puede utilizar cuatro configuraciones determinadas por **CPOL** (Clock Polarity, estado base del reloj) y **CPHA** (Clock Phase, flanco de muestreo):
 
 | Modo | CPOL | CPHA | Flanco de muestreo |
-|------|------|------|---------------------|
-| 0 | 0 | 0 | Subida |
-| 1 | 0 | 1 | Bajada |
-| 2 | 1 | 0 | Bajada |
-| 3 | 1 | 1 | Subida |
+| ---- | ---- | ---- | ------------------ |
+| 0    | 0    | 0    | Subida             |
+| 1    | 0    | 1    | Bajada             |
+| 2    | 1    | 0    | Bajada             |
+| 3    | 1    | 1    | Subida             |
 
-En memorias Flash se usa normalmente **Modo 0** o **Modo 3**.
+En memorias Flash se utiliza normalmente **Modo 0** o **Modo 3**, dependiendo de la memoria específica.
 
----
+> **Regla de oro:** el dato cambia en un flanco del reloj y se lee en el otro. En el momento del flanco de lectura, el dato debe permanecer estable — no puede haber cambios en la señal de datos al mismo tiempo que el flanco de lectura.
 
-## 3. Forma física
+## 1.5 Estructura general de la comunicación
 
-### 3.1 Conexión FPGA ↔ Flash
+Toda transacción con la Flash sigue, de manera general, el siguiente patrón:
+
+```text
+CS baja → [Comando] → [Dirección] → [Dummy, si aplica] → [Datos] → CS sube
+```
+
+Los elementos principales de la transacción son:
+
+- **Comando:** 1 byte que indica la operación que se desea realizar.
+- **Dirección:** 3 bytes (24 bits) que indican la posición de memoria.
+- **Dummy:** 0 o más bytes de relleno utilizados por algunos comandos.
+- **Datos:** información que se transmite o recibe.
+
+La secuencia general de la comunicación es:
+
+1. `CS` baja al inicio de la transacción.
+2. El maestro genera el reloj.
+3. Se transmite el comando.
+4. Se transmite la dirección cuando la operación la requiere.
+5. Se transmiten ciclos dummy cuando el comando los requiere.
+6. Se transmiten o reciben los datos.
+7. `CS` sube al finalizar la transacción.
+
+## 1.6 Forma física
+
+### 1.6.1 Conexión FPGA ↔ Flash
 
 ```mermaid
 flowchart LR
@@ -59,37 +94,100 @@ flowchart LR
     FPGA -- GND --> FLASH
 ```
 
-### 3.2 Tabla de conexión
+### 1.6.2 Tabla de conexión
 
 | FPGA (Maestro) | Dirección | Flash (Esclavo) | Pin Flash |
-|----------------|-----------|-----------------|-----------|
-| SCLK | → | CLK | 6 |
-| MOSI | → | DI (IO0) | 5 |
-| MISO | ← | DO (IO1) | 2 |
-| CS | → | CS# | 1 |
-| 3.3V | → | VCC | 8 |
-| GND | → | GND | 4 |
+| -------------- | --------- | --------------- | --------- |
+| SCLK           | →         | CLK             | 6         |
+| MOSI           | →         | DI (IO0)        | 5         |
+| MISO           | ←         | DO (IO1)        | 2         |
+| CS             | →         | CS#             | 1         |
+| 3.3V           | →         | VCC             | 8         |
+| GND            | →         | GND             | 4         |
 
-### 3.3 Niveles de voltaje
+### 1.6.3 Niveles de voltaje
 
 - La FPGA típicamente maneja **3.3 V**.
 - La Flash SPI también trabaja a **3.3 V**.
-- **Importante:** si un chip trabaja a 5 V y otro a 3.3 V, hay que poner un adaptador de niveles. Esto se discutió en clase para las matrices LED, y aplica igual aquí.
+- Si un chip trabaja a 5 V y otro a 3.3 V, es necesario un adaptador de niveles.
 
-### 3.4 Pines típicos de una Flash (ejemplo SOIC-8)
+### 1.6.4 Pines típicos de una Flash (SOIC-8)
 
-| Pin | Nombre | Función |
-|-----|--------|---------|
-| 1 | CS# | Chip Select (activo bajo) |
-| 2 | DO (IO1) | Datos de salida / IO1 en Quad |
-| 3 | WP# (IO2) | Write Protect / IO2 en Quad |
-| 4 | GND | Tierra |
-| 5 | DI (IO0) | Datos de entrada / IO0 en Quad |
-| 6 | CLK | Reloj |
-| 7 | HOLD# (IO3) | Hold / IO3 en Quad |
-| 8 | VCC | Alimentación (3.3 V) |
+| Pin | Nombre      | Función                              |
+| --- | ----------- | ------------------------------------ |
+| 1   | CS#         | Chip Select (activo bajo)            |
+| 2   | DO (IO1)    | Datos de salida / IO1 en Quad        |
+| 3   | WP# (IO2)   | Write Protect / IO2 en Quad          |
+| 4   | GND         | Tierra                               |
+| 5   | DI (IO0)    | Datos de entrada / IO0 en Quad       |
+| 6   | CLK         | Reloj                                |
+| 7   | HOLD# (IO3) | Hold / IO3 en Quad                   |
+| 8   | VCC         | Alimentación (3.3 V)                 |
+
+## 1.7 Estructura interna de la memoria
+
+Comprender cómo se divide internamente la memoria Flash es importante para entender la funcionalidad de las direcciones que se envían en múltiples comandos.
+
+> ⚠️ **TODO:** incluir diagrama `estructura_memoria.png` (pendiente de crear).
+
+Estas memorias típicamente se dividen en **3 niveles**. La memoria completa tiene una capacidad de **16 MiB**(Mebibyte), la cual se divide en **256 bloques** de **64 KB** cada uno. Cada bloque se divide en **16 sectores** de **4 KB** cada uno. Cada sector se vuelve a dividir en **16 páginas** de **256 Bytes** cada una, y estas últimas se dividen en los mencionados 256 Bytes.
+
+> ⚠️ **TODO:** incluir diagrama `estructura_detallada_memoria.png` (pendiente de crear).
+
+Las direcciones de memoria que se envían desde el maestro hacia el esclavo se dividen en **4 partes** (esto se refiere únicamente a la distribución de la información, las direcciones se envían de forma continua bit tras bit).
+
+> ⚠️ **TODO:** incluir diagrama `estructura_direcciones.png` (pendiente de crear).
 
 ---
+# 2. Comandos de estado y control
+
+Esta sección presenta los comandos utilizados para controlar la memoria y consultar su estado.
+
+## 2.1 Índice de comandos
+
+| Código | Comando                | Función                                        |
+| ------ | ---------------------- | ---------------------------------------------- |
+| `06h`  | Write Enable           | Habilita escritura/programación                |
+| `04h`  | Write Disable          | Deshabilita escritura/programación             |
+| `05h`  | Read Status Register 1 | Consulta el registro de estado (WIP, WEL)      |
+| `35h`  | Read Status Register 2 | Consulta información adicional de estado       |
+| `01h`  | Write Status Register  | Escribe información en el registro de estado   |
+| `C7h`  | Chip Erase             | Borra toda la memoria                          |
+
+## 2.2 Uso de los comandos
+
+### 2.2.1 Write Enable (`06h`)
+
+Habilita la memoria para operaciones de escritura o borrado. Es **obligatorio** antes de cualquier `Page Program` o comando de `Erase`. No lleva dirección ni datos — solo el opcode.
+
+### 2.2.2 Write Disable (`04h`)
+
+Deshabilita las operaciones de escritura. Se usa cuando se quiere garantizar que la memoria no acepte comandos de escritura hasta un nuevo Write Enable.
+
+### 2.2.3 Read Status Register 1 (`05h`)
+
+Devuelve el registro de estado de 8 bits. Los bits relevantes son:
+
+- **WIP** (Write In Progress, bit 0): indica si hay una operación en curso.
+- **WEL** (Write Enable Latch, bit 1): indica si la memoria está habilitada para escritura.
+
+> **Remark:** después de enviar un comando de escritura o borrado, el maestro debe **consultar repetidamente** este registro con `05h` hasta verificar que `WIP = 0`, confirmando que la operación interna terminó.
+
+### 2.2.4 Read Status Register 2 (`35h`)
+
+Devuelve un segundo registro con información adicional del chip (bits de protección, Quad Enable, etc.).
+
+### 2.2.5 Write Status Register (`01h`)
+
+Permite escribir en el registro de estado para configurar bits de protección, Quad Enable, etc.
+
+## 2.3 Formas de onda
+
+![Comandos de estado y control](../../diagrams/protocol/wren_rdsr_rdid_fread.png)
+
+*(source: [wren_rdsr_rdid_fread.png](../../diagrams/protocol/wren_rdsr_rdid_fread.png))*
+
+
 
 ## 4. Protocolo de comunicación
 
