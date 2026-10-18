@@ -42,8 +42,12 @@ SoC data bus. On one side it exposes the standard course port contract
 the four SPI wires (`SCLK`, `MOSI`, `MISO`, `CS`) to the external Flash.
 
 
-![Flahs control interface](../../diagrams/protocol/flash_ctrl_interface.svg)
+![System context](../../diagrams/architecture/system_context.svg)
 
+*Figure 1 — System context. The controller bridges the FemtoRV32 SoC's
+memory bus (`d_in`, `cs`, `addr`, `rd`, `wr`, `d_out`) on the left and
+the external SPI NOR Flash (`SCLK`, `MOSI`, `MISO`, `CS`) on the right.
+The controller is placed at base `0x420000` with a 64 KB window.*
 The controller is located at base address `0x420000` and spans
 `0x420000–0x42FFFF` (see the course memory map). It uses exactly one
 `cs[i]` line from the address decoder; the index `i` is fixed by the

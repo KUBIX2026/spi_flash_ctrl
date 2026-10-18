@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .legend-text { font-family: 'Arial', sans-serif; font-size: 10px; fill: #333; }
+      .box-text { font-family: 'Arial', sans-serif; font-size: 12px; fill: #333; }
+      .box-text-bold { font-family: 'Arial', sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+      .edge-label { font-family: 'Arial', sans-serif; font-size: 11px; fill: #333; }
+    </style>
+    
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Título -->
+  <text x="400" y="24" text-anchor="middle" class="title">READ operation — sequence flowchart</text>
+
+  <!-- Leyenda -->
+  <rect x="40" y="44" width="18" height="14" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="65" y="56" class="legend-text">Firmware</text>
+  
+  <rect x="160" y="44" width="18" height="14" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="185" y="56" class="legend-text">RTL</text>
+  
+  <rect x="250" y="44" width="18" height="14" fill="#f8cecc" stroke="#b85450"/>
+  <text x="275" y="56" class="legend-text">Flash</text>
+  
+  <rect x="340" y="44" width="18" height="14" fill="#fff2cc" stroke="#d6b656"/>
+  <text x="365" y="56" class="legend-text">Decision</text>
+
+  <!-- Flujo principal -->
+  <!-- Paso 1 -->
+  <rect x="250" y="85" width="300" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="110" text-anchor="middle" class="box-text">Write ADDR = byte address</text>
+
+  <!-- Paso 2 -->
+  <rect x="250" y="150" width="300" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="175" text-anchor="middle" class="box-text">Write LEN = number of bytes (1–256)</text>
+
+  <!-- Paso 3 -->
+  <rect x="250" y="215" width="300" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="240" text-anchor="middle" class="box-text">Write CTRL (CMD=READ, START=1)</text>
+
+  <!-- Paso 4 -->
+  <rect x="250" y="280" width="300" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="400" y="305" text-anchor="middle" class="box-text">CS low; shift 03h + 24-bit address</text>
+
+  <!-- Paso 5 -->
+  <rect x="250" y="345" width="300" height="40" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="400" y="370" text-anchor="middle" class="box-text">Drive MISO with consecutive bytes</text>
+
+  <!-- Paso 6 -->
+  <rect x="250" y="410" width="300" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="400" y="435" text-anchor="middle" class="box-text">Capture LEN bytes into RX FIFO</text>
+
+  <!-- Paso 7 -->
+  <rect x="250" y="475" width="300" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="400" y="500" text-anchor="middle" class="box-text">CS high; STATUS.DONE = 1</text>
+
+  <!-- Paso 8 -->
+  <rect x="250" y="540" width="300" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="565" text-anchor="middle" class="box-text">Poll STATUS.BUSY until 0</text>
+
+  <!-- Decisión -->
+  <polygon points="400,610 470,660 400,710 330,660" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="400" y="665" text-anchor="middle" class="box-text">ERR?</text>
+
+  <!-- Rama de Error (Izquierda) -->
+  <rect x="60" y="640" width="160" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="140" y="665" text-anchor="middle" class="box-text">Return -EIO</text>
+
+  <!-- Paso 9 (Éxito) -->
+  <rect x="250" y="740" width="300" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="765" text-anchor="middle" class="box-text">Read LEN bytes from DATA</text>
+
+  <!-- Paso 10 (Fin) -->
+  <rect x="250" y="805" width="300" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="830" text-anchor="middle" class="box-text-bold">Done</text>
+
+  <!-- Flechas y conexiones -->
+  <line x1="400" y1="125" x2="400" y2="150" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="400" y1="190" x2="400" y2="215" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="400" y1="255" x2="400" y2="280" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="400" y1="320" x2="400" y2="345" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="400" y1="385" x2="400" y2="410" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="400" y1="450" x2="400" y2="475" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="400" y1="515" x2="400" y2="540" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="400" y1="580" x2="400" y2="610" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Flecha de Error -->
+  <line x1="330" y1="660" x2="220" y2="660" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="275" y="653" text-anchor="middle" class="edge-label">Yes</text>
+
+  <!-- Flecha de Éxito -->
+  <line x1="400" y1="710" x2="400" y2="740" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="412" y="727" text-anchor="start" class="edge-label">No</text>
+
+  <!-- Flecha final -->
+  <line x1="400" y1="780" x2="400" y2="805" stroke="#333" stroke-width="1.5" marker-end="url(#a)"/>
+
+</svg>

@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1040" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .legend-text { font-family: 'Arial', sans-serif; font-size: 10px; fill: #333; }
+      .box-text { font-family: 'Arial', sans-serif; font-size: 12px; fill: #333; }
+      .box-text-bold { font-family: 'Arial', sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+      .decision-text { font-family: 'Arial', sans-serif; font-size: 11px; fill: #333; }
+      .edge-label { font-family: 'Arial', sans-serif; font-size: 10px; fill: #333; }
+    </style>
+    
+    <marker id="c" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Título -->
+  <text x="400" y="24" text-anchor="middle" class="title">ERASE operation — SECTOR_ERASE sequence (same shape for BLOCK/CHIP)</text>
+
+  <!-- Leyenda -->
+  <rect x="40" y="44" width="18" height="14" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="65" y="56" class="legend-text">Firmware</text>
+  
+  <rect x="160" y="44" width="18" height="14" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="185" y="56" class="legend-text">RTL</text>
+  
+  <rect x="250" y="44" width="18" height="14" fill="#f8cecc" stroke="#b85450"/>
+  <text x="275" y="56" class="legend-text">Flash</text>
+  
+  <rect x="340" y="44" width="18" height="14" fill="#fff2cc" stroke="#d6b656"/>
+  <text x="365" y="56" class="legend-text">Decision</text>
+
+  <!-- Flujo principal -->
+  <!-- Paso 1 -->
+  <rect x="250" y="85" width="300" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="107" text-anchor="middle" class="box-text">Write CTRL (CMD=WREN, START=1)</text>
+
+  <!-- Paso 2 -->
+  <rect x="250" y="140" width="300" height="36" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="400" y="162" text-anchor="middle" class="box-text">Shift 06h; CS high; DONE=1</text>
+
+  <!-- Paso 3 -->
+  <rect x="250" y="195" width="300" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="217" text-anchor="middle" class="box-text">Poll BUSY; read STATUS</text>
+
+  <!-- Decisión 1 -->
+  <polygon points="400,250 455,290 400,330 345,290" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="400" y="294" text-anchor="middle" class="decision-text">ERR?</text>
+
+  <!-- Error 1 -->
+  <rect x="70" y="270" width="150" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="145" y="292" text-anchor="middle" class="decision-text">Return -EIO</text>
+
+  <!-- Paso 4 -->
+  <rect x="250" y="350" width="300" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="372" text-anchor="middle" class="box-text">Write ADDR = sector/block base</text>
+
+  <!-- Paso 5 -->
+  <rect x="250" y="405" width="300" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="427" text-anchor="middle" class="box-text">Write CTRL (CMD=SECTOR_ERASE, START=1)</text>
+
+  <!-- Paso 6 -->
+  <rect x="250" y="460" width="300" height="36" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="400" y="482" text-anchor="middle" class="box-text">Shift 20h + address; CS high; DONE=1</text>
+
+  <!-- Paso 7 -->
+  <rect x="250" y="515" width="300" height="36" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="400" y="537" text-anchor="middle" class="box-text">WIP = 1, internal erase (up to 400 ms)</text>
+
+  <!-- Paso 8 -->
+  <rect x="250" y="570" width="300" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="592" text-anchor="middle" class="box-text">Poll BUSY; read STATUS</text>
+
+  <!-- Decisión 2 -->
+  <polygon points="400,625 455,665 400,705 345,665" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="400" y="669" text-anchor="middle" class="decision-text">ERR?</text>
+
+  <!-- Error 2 -->
+  <rect x="620" y="645" width="150" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="695" y="667" text-anchor="middle" class="decision-text">Return -EIO</text>
+
+  <!-- Paso 9 -->
+  <rect x="250" y="725" width="300" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="747" text-anchor="middle" class="box-text">Write CTRL (CMD=RDSR1, START=1)</text>
+
+  <!-- Paso 10 -->
+  <rect x="250" y="780" width="300" height="36" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="400" y="802" text-anchor="middle" class="box-text">Shift 05h; capture status byte</text>
+
+  <!-- Paso 11 -->
+  <rect x="250" y="835" width="300" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="857" text-anchor="middle" class="box-text">Read STATUS.WIP</text>
+
+  <!-- Decisión 3 -->
+  <polygon points="400,890 455,930 400,970 345,930" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="400" y="934" text-anchor="middle" class="decision-text">WIP=1?</text>
+
+  <!-- Fin -->
+  <rect x="250" y="995" width="300" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="400" y="1017" text-anchor="middle" class="box-text-bold">Done</text>
+
+  <!-- Conexiones verticales principales -->
+  <line x1="400" y1="121" x2="400" y2="140" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="176" x2="400" y2="195" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="231" x2="400" y2="250" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="330" x2="400" y2="350" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="386" x2="400" y2="405" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="441" x2="400" y2="460" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="496" x2="400" y2="515" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="551" x2="400" y2="570" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="606" x2="400" y2="625" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="705" x2="400" y2="725" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="761" x2="400" y2="780" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="816" x2="400" y2="835" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="871" x2="400" y2="890" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <line x1="400" y1="970" x2="400" y2="995" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+
+  <!-- Flechas de decisión (Ramas) -->
+  
+  <!-- Decisión 1: Error -> Izquierda -->
+  <line x1="345" y1="290" x2="220" y2="290" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <text x="280" y="283" text-anchor="middle" class="edge-label">Yes</text>
+  <text x="412" y="343" text-anchor="start" class="edge-label">No</text>
+
+  <!-- Decisión 2: Error -> Derecha -->
+  <line x1="455" y1="665" x2="620" y2="665" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <text x="540" y="658" text-anchor="middle" class="edge-label">Yes</text>
+  <text x="412" y="718" text-anchor="start" class="edge-label">No</text>
+
+  <!-- Decisión 3: WIP=1 -> Bucle de reintento (Corregido) -->
+  <path d="M 345,930 L 220,930 L 220,743 L 250,743" fill="none" stroke="#333" stroke-width="1.5" marker-end="url(#c)"/>
+  <text x="232" y="923" text-anchor="start" class="edge-label">Yes (loop)</text>
+  <text x="412" y="983" text-anchor="start" class="edge-label">No</text>
+
+</svg>
