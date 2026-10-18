@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 200" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .box-title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .box-sub { font-family: 'Arial', sans-serif; font-size: 12px; fill: #666; }
+      .box-detail { font-family: 'Arial', sans-serif; font-size: 10px; fill: #999; }
+      .bus-title { font-family: 'Arial', sans-serif; font-size: 10px; font-weight: bold; fill: #333; }
+      .bus-detail { font-family: 'Arial', sans-serif; font-size: 10px; fill: #666; }
+      .footer-text { font-family: 'Arial', sans-serif; font-size: 10px; font-style: italic; fill: #666; }
+    </style>
+    
+    <!-- Marcador de flecha derecha -->
+    <marker id="arrowEnd" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <!-- Marcador de flecha izquierda -->
+    <marker id="arrowStart" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Título -->
+  <text x="380" y="26" text-anchor="middle" class="title">System overview — three layers</text>
+
+  <!-- Caja 1: FemtoRV32 SoC -->
+  <rect x="30" y="70" width="180" height="90" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="120" y="105" text-anchor="middle" class="box-title">FemtoRV32</text>
+  <text x="120" y="123" text-anchor="middle" class="box-sub">SoC</text>
+  <text x="120" y="143" text-anchor="middle" class="box-detail">(black box)</text>
+
+  <!-- Caja 2: SPI-Flash Controller -->
+  <rect x="280" y="70" width="200" height="90" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="380" y="105" text-anchor="middle" class="box-title">SPI-Flash Controller</text>
+  <text x="380" y="123" text-anchor="middle" class="box-sub">(this repository)</text>
+  <text x="380" y="143" text-anchor="middle" class="box-detail">CSR + FSM + SPI master</text>
+
+  <!-- Caja 3: SPI NOR Flash -->
+  <rect x="550" y="70" width="180" height="90" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="640" y="105" text-anchor="middle" class="box-title">SPI NOR Flash</text>
+  <text x="640" y="123" text-anchor="middle" class="box-sub">(W25Q128JV ref.)</text>
+  <text x="640" y="143" text-anchor="middle" class="box-detail">external device</text>
+
+  <!-- Bus 1: mem bus (bidireccional) -->
+  <line x1="210" y1="115" x2="280" y2="115" stroke="#333" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+  <text x="245" y="103" text-anchor="middle" class="bus-title">mem bus</text>
+  <text x="245" y="135" text-anchor="middle" class="bus-detail">CSR</text>
+
+  <!-- Bus 2: SPI (bidireccional) -->
+  <line x1="480" y1="115" x2="550" y2="115" stroke="#333" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+  <text x="515" y="103" text-anchor="middle" class="bus-title">SPI</text>
+  <text x="515" y="135" text-anchor="middle" class="bus-detail">4 wires</text>
+
+  <!-- Nota final -->
+  <text x="380" y="188" text-anchor="middle" class="footer-text">The controller is the intermediate layer between the memory-mapped SoC and the SPI slave.</text>
+  
+</svg>

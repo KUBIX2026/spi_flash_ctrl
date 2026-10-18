@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 180" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .box-title { font-family: 'Arial', sans-serif; font-size: 10px; font-weight: bold; fill: #333; }
+      .box-sub { font-family: 'Arial', sans-serif; font-size: 9px; fill: #666; }
+      .footer-text { font-family: 'Arial', sans-serif; font-size: 10px; font-style: italic; fill: #666; }
+    </style>
+    
+    <marker id="b" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L9,4 L0,8 Z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Título -->
+  <text x="490" y="26" text-anchor="middle" class="title">Top-down methodology — flowchart → ASM → RTL → hardware</text>
+
+  <!-- Cajas -->
+  <!-- 1: System Requirements -->
+  <rect x="15" y="70" width="95" height="60" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="62.5" y="96" text-anchor="middle" class="box-title">System</text>
+  <text x="62.5" y="112" text-anchor="middle" class="box-sub">Requirements</text>
+
+  <!-- 2: Peripheral Spec -->
+  <rect x="137" y="70" width="95" height="60" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="184.5" y="96" text-anchor="middle" class="box-title">Peripheral</text>
+  <text x="184.5" y="112" text-anchor="middle" class="box-sub">Spec</text>
+
+  <!-- 3: Architecture -->
+  <rect x="259" y="70" width="95" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="306.5" y="96" text-anchor="middle" class="box-title">Architecture</text>
+  <text x="306.5" y="112" text-anchor="middle" class="box-sub">+ diagrams</text>
+
+  <!-- 4: ASM -->
+  <rect x="381" y="70" width="95" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="428.5" y="96" text-anchor="middle" class="box-title">ASM</text>
+  <text x="428.5" y="112" text-anchor="middle" class="box-sub">+ FSM</text>
+
+  <!-- 5: RTL -->
+  <rect x="503" y="70" width="95" height="60" rx="6" fill="#ffe6cc" stroke="#d79b00" stroke-width="1.5"/>
+  <text x="550.5" y="96" text-anchor="middle" class="box-title">RTL</text>
+  <text x="550.5" y="112" text-anchor="middle" class="box-sub">Verilog</text>
+
+  <!-- 6: Simulation -->
+  <rect x="625" y="70" width="95" height="60" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="672.5" y="96" text-anchor="middle" class="box-title">Simulation</text>
+  <text x="672.5" y="112" text-anchor="middle" class="box-sub">&amp; Verif.</text>
+
+  <!-- 7: SoC Integration -->
+  <rect x="747" y="70" width="95" height="60" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="794.5" y="96" text-anchor="middle" class="box-title">SoC</text>
+  <text x="794.5" y="112" text-anchor="middle" class="box-sub">Integration</text>
+
+  <!-- 8: FPGA Validation -->
+  <rect x="869" y="70" width="95" height="60" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="916.5" y="96" text-anchor="middle" class="box-title">FPGA</text>
+  <text x="916.5" y="112" text-anchor="middle" class="box-sub">Validation</text>
+
+  <!-- Flechas (todos los huecos son de 27 unidades) -->
+  <line x1="110" y1="100" x2="137" y2="100" stroke="#333" stroke-width="1.5" marker-end="url(#b)"/>
+  <line x1="232" y1="100" x2="259" y2="100" stroke="#333" stroke-width="1.5" marker-end="url(#b)"/>
+  <line x1="354" y1="100" x2="381" y2="100" stroke="#333" stroke-width="1.5" marker-end="url(#b)"/>
+  <line x1="476" y1="100" x2="503" y2="100" stroke="#333" stroke-width="1.5" marker-end="url(#b)"/>
+  <line x1="598" y1="100" x2="625" y2="100" stroke="#333" stroke-width="1.5" marker-end="url(#b)"/>
+  <line x1="720" y1="100" x2="747" y2="100" stroke="#333" stroke-width="1.5" marker-end="url(#b)"/>
+  <line x1="842" y1="100" x2="869" y2="100" stroke="#333" stroke-width="1.5" marker-end="url(#b)"/>
+
+  <!-- Nota final -->
+  <text x="490" y="164" text-anchor="middle" class="footer-text">Each stage produces an artifact that is the input to the next. The chapters in docs/ mirror this flow.</text>
+  
+</svg>
