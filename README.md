@@ -112,10 +112,10 @@ Additional repository directories contain the implementation artifacts:
 | Item | Link |
 |---|---|
 | GitHub Organization | [KUBIX2026](https://github.com/KUBIX2026) |
-| Issue template (shared repo) | [`template/.github/ISSUE_TEMPLATE/tarea.yml`](https://github.com/cicamargoba/digital_UN/tree/main/template/.github/ISSUE_TEMPLATE) |
-| Course evaluation rubric | [`rubrica_evaluacion_proyecto.md`](https://github.com/cicamargoba/digital_UN/blob/main/rubrica_evaluacion_proyecto.md) |
-
-## 6. Development Status
+| Team repository | [spi_flash_ctrl](https://github.com/KUBIX2026/spi_flash_ctrl) |
+| Team planning & conventions | [`planificacion/README.md`](planificacion/README.md) |
+| Issue template (shared repo) | [`tarea.yml`](https://github.com/cicamargoba/digital_UN/tree/main/template/.github/ISSUE_TEMPLATE) |
+| Evaluation rubric | [`rubrica_evaluacion_proyecto.md`](https://github.com/cicamargoba/digital_UN/blob/main/rubrica_evaluacion_proyecto.md) |
 
 ## 6. Development Status
 
