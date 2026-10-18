@@ -66,7 +66,7 @@ they can also be opened in draw.io.
 
 ## Checkpoint status
 
-This chapter satisfies **Checkpoint 1** of the course PBL:
+This chapter satisfies:
 
 - Flowchart of operation: ✅ (operation_flow.md §3–§5)
 - CSR specification: ✅ (csr_interface.md)
