@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 220" width="100%" height="100%">
+  
+  <defs>
+    <!-- Marker for arrow end (pointing right) -->
+    <marker id="arrowEnd" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <!-- Marker for arrow start (pointing left) -->
+    <marker id="arrowStart" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Left Box: FemtoRV32 SoC -->
+  <rect x="50" y="70" width="180" height="80" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="140" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">FemtoRV32 SoC</text>
+  <text x="140" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">(black box)</text>
+
+  <!-- Middle Box: SPI-Flash Ctrl -->
+  <rect x="310" y="70" width="180" height="80" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="400" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">SPI-Flash Ctrl</text>
+  <text x="400" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">(this peripheral)</text>
+
+  <!-- Right Box: W25Q128 -->
+  <rect x="570" y="70" width="180" height="80" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="660" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">W25Q128</text>
+  <text x="660" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">(ref.)</text>
+
+  <!-- Arrow 1: mem bus (bidirectional) -->
+  <line x1="230" y1="110" x2="310" y2="110" stroke="#333" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+  <text x="270" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">mem bus</text>
+
+  <!-- Arrow 2: SPI (bidirectional) -->
+  <line x1="490" y1="110" x2="570" y2="110" stroke="#333" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+  <text x="530" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">SPI</text>
+
+</svg>
