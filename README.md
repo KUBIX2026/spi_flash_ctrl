@@ -357,12 +357,19 @@ Basandonos en lo explicado en este README y considerando la arquitectura propues
 ![Diagrama de entradas y salidas](cores/spi_flash/diagramas/Diagrama_entradas_salidas.png)
 
 
-y este es un primer diagrama de la estructura interna del controlador (aun en desarrollo).
+# 7. Diagramas de flujo 
 
-![Uso práctico de los comandos de escritura y borrado](cores/spi_flash/diagramas/diagrama_interno.png)
+Basandonos en el diagrama de entradas y salidas, y de las necesidades de y limitaciones tanto del RV32I como del protocolo SPI para memorias flash, a continuacion se presentan los diagramas de flujo de las acciones disponibles para el RV32I mediante el modulo de control de la memoria flash.
 
+## 7.1 Lectura de informacion pedida por la CPU
 
-# 7. Información extra
+El siguiente diagrama de flujo explica la seccuencia de pasos necesarios para realizar una lectura de datos entre 2 direcciones de memoria escogidas por la CPU.
+
+![diagrama de flujo para lectura de informacion](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash_simple.png)
+
+Pare ver los registros de consulta de la CPU y una descripcion mas detallada de los variables del diagrama vaya [ aqui ](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.pdf) o a [ aqui ](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.png) (formato png)
+
+# 8. Información extra
 
 ### Estructura del repo
 
