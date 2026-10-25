@@ -357,17 +357,27 @@ Basandonos en lo explicado en este README y considerando la arquitectura propues
 ![Diagrama de entradas y salidas](cores/spi_flash/diagramas/Diagrama_entradas_salidas.png)
 
 
-# 7. Diagramas de flujo 
+# 7. Diagramas de flujo
 
-Basandonos en el diagrama de entradas y salidas, y de las necesidades de y limitaciones tanto del RV32I como del protocolo SPI para memorias flash, a continuacion se presentan los diagramas de flujo de las acciones disponibles para el RV32I mediante el modulo de control de la memoria flash.
+Basándonos en el diagrama de entradas y salidas, y en las necesidades y limitaciones tanto del RV32I como del protocolo SPI para memorias flash, a continuación se presentan los diagramas de flujo de las acciones disponibles para el RV32I mediante el módulo de control de la memoria flash.
 
-## 7.1 Lectura de informacion pedida por la CPU
+## 7.1 Lectura de información pedida por la CPU
 
-El siguiente diagrama de flujo explica la seccuencia de pasos necesarios para realizar una lectura de datos entre 2 direcciones de memoria escogidas por la CPU.
+El siguiente diagrama de flujo explica la secuencia de pasos necesarios para realizar una lectura de datos entre 2 direcciones de memoria escogidas por la CPU.
 
-![diagrama de flujo para lectura de informacion](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash_simple.png)
+![diagrama de flujo para lectura de información](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash_simple.png)
 
-Pare ver los registros de consulta de la CPU y una descripcion mas detallada de los variables del diagrama vaya [ aqui ](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.pdf) o a [ aqui ](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.png) (formato png)
+Para ver los registros de consulta de la CPU y una descripción más detallada de las variables del diagrama, vaya [aquí](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.pdf) o a [aquí](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.png) (formato png).
+
+
+
+## 7.2 Borrado de información pedido por la CPU
+
+El siguiente diagrama de flujo explica la secuencia de pasos necesarios para borrar un sector (4 KB), un bloque (64 KB) o el chip completo. Incluye la habilitación de escritura en la flash (WREN), el envío del comando de borrado y la espera a que la flash termine, con una bandera de error si se agota el tiempo máximo de espera.
+
+![diagrama de flujo para borrado de información](cores/spi_flash/diagramas/diagrama_flujo_borrado_flash_simple.png)
+
+Para ver los registros de consulta de la CPU y una descripción más detallada de las variables del diagrama, vaya [aquí](cores/spi_flash/diagramas/diagrama_flujo_borrado_flash.pdf) o a [aquí](cores/spi_flash/diagramas/diagrama_flujo_borrado_flash.png) (formato png).
 
 # 8. Información extra
 
