@@ -40,8 +40,8 @@ para que otros esclavos puedan compartir el bus.
   reloj determinan los cuatro modos de operación del protocolo.
 - **Comunicación full-duplex:** MOSI y MISO son líneas independientes; el maestro envía un bit por MOSI al mismo tiempo que recibe un bit por MISO. Cada ciclo de reloj consiste en una transmisión y una recepción simultáneas.
 - **Generación del reloj:** SCLK es generado por la FPGA. La memoria Flash no tiene una fuente de reloj interna para el bus.
-- **Estabilidad de los datos:** Cuando se muestrea un bit, este debe permanecer estable. En la práctica, esto significa que los datos cambian en un flanco del reloj y se muestrean en el otro, lo que proporciona medio ciclo de reloj completo para que se estabilicen 
-- **Velocidad de transmisión:** lLa frecuencia está limitada por el esclavo. La hoja de datos de la memoria Flash define una frecuencia máxima de SCLK. El controlador no debe superarla (véase la tabla de tiempos de la Sección ).
+- **Estabilidad de los datos:** Cuando se muestrea un bit, este debe permanecer estable. En la práctica, esto significa que los datos cambian en un flanco del reloj y se muestrean en el otro, lo que proporciona medio ciclo de reloj completo para que se estabilicen.
+- **Velocidad de transmisión:** La frecuencia está limitada por el esclavo. La hoja de datos de la memoria Flash define una frecuencia máxima de SCLK. El controlador no debe superarla (véase la [Sección 1.8](#18-parámetros-de-tiempo-de-la-memoria)).
 
 ## 1.4 Modos SPI (CPOL / CPHA)
 
@@ -97,7 +97,7 @@ Tres observaciones que importan para el controlador:
 3. **`CS` es el delimitador de transacción.** Mientras `CS` está
    bajo, el reloj sigue desplazando bits. Cuando `CS` sube, la
    transacción termina (sujeto a las reglas de frontera de byte que
-   se discuten en la Sección 6).
+   se discuten en la Sección 2.4).
 
 > **Modo 3 es la versión en espejo.** En Modo 3, `SCLK` en reposo está
 > alto, el dato cambia en la bajada y se muestrea en la subida. La
@@ -140,9 +140,9 @@ El trabajo del controlador, a nivel de protocolo, es secuenciar estas
 fases correctamente: afirmar `CS`, desplazar el opcode, opcionalmente
 desplazar la dirección, opcionalmente insertar ciclos dummy, luego
 desplazar datos, y finalmente desafirmar `CS`. Los bytes exactos de
-cada fase se especifican en 
-[Section ](-flash-command-set); el CSR que los dirige está
-en la [Section ](csr-interface-specification).
+cada fase se especifican en la
+[Sección 2](#2-conjunto-de-comandos-de-la-memoria-flash); el CSR que
+los dirige se documenta en la interfaz de registros del controlador.
 
 ## 1.7 Estructura interna de la memoria
 
@@ -165,7 +165,7 @@ La dirección de 24 bits no se interpreta como un puntero plano, sino que el dis
 
 *Figura 1. Organización jerárquica de una memoria Flash SPI NOR de 128 Mbit. Cada nivel subdivide el nivel anterior en unidades de tamaño fijo, lo que permite distribuir los bits de la dirección en los cuatro campos descritos en la subsección 1.7.2.*
 
-La division no es arbitraria: **erase** opera en sectores completos (4 KB) o bloques (64 KB), **program** opera por lo menos en una pagina (256 B), y **read** puede extenderse a través de los límites entre páginas sin necesidad de interrumpir la transferencia. Por tanto, el controlador debe considerar los límites de cada unidad para evitar escrituras que provoquen un retorno al inicio de una página o borrados de regiones mayores que las previstas.
+La división no es arbitraria: **erase** opera en sectores completos (4 KB) o bloques (64 KB), **program** opera como máximo en una página (256 B), y **read** puede extenderse a través de los límites entre páginas sin necesidad de interrumpir la transferencia. Por tanto, el controlador debe considerar los límites de cada unidad para evitar escrituras que provoquen un retorno al inicio de una página o borrados de regiones mayores que las previstas.
 
 ### 1.7.2 Descomposición de direcciones
 
@@ -183,9 +183,26 @@ Esta descomposición tiene tres implicaciones importantes para el diseño del co
 
 3. **Límite de bloque.** `BLOCK_ERASE (0xD8)` borra el bloque completo de 64 KB que contiene la dirección indicada. Por tanto, antes de ejecutar esta operación, el sistema debe asegurarse de que el borrado de toda esa región sea adecuado para la aplicación.
 
+### 1.8 Parámetros de tiempo de la memoria
+
+Estos valores acotan el diseño del controlador. Provienen de la hoja de datos del dispositivo de referencia (AC Electrical Characteristics, §9.6) y se utilizan en la temporización del sondeo, en la definición de los tiempos de espera (*timeouts*) del CSR y en los procedimientos de verificación.
+
+| Símbolo | Parámetro | Mín | Típ | Máx | Unidad |
+| ------- | --------- | --- | --- | --- | ------ |
+| `f_R` | Frecuencia de reloj para READ (03h) | DC | — | 50 | MHz |
+| `f_R` (Fast Read) | Frecuencia de reloj para FAST_READ (0Bh) | DC | — | 133 | MHz |
+| `t_PP` | Tiempo de Page Program | — | 0.7 | 3 | ms |
+| `t_SE` | Tiempo de Sector Erase (4 KB) | — | 45 | 400 | ms |
+| `t_BE` | Tiempo de Block Erase (64 KB) | — | 150 | 2000 | ms |
+| `t_CE` | Tiempo de Chip Erase | — | 20 | 100 | s |
+| `t_SHSL2` | Tiempo de deselección de CS (después de erase/program) | 50 | — | — | ns |
+| `t_PUW` | Retardo de encendido antes de escribir | 5 | — | — | ms |
+
+> **Implicación de diseño.** El tiempo máximo de borrado (2000 ms para un bloque de 64 KB, 100 s para chip erase) es mucho mayor que cualquier tiempo de sondeo razonable. El CSR debe exponer un registro de timeout, y el firmware debe implementar una política de reintento-o-aborto.
+
 # 2. Conjunto de comandos de la memoria Flash
 
-La [Sección 1](#1-protocolo-spi) explica cómo se transmiten los bits a través de las líneas de comunicación SPI. Esta sección aborda una cuestión diferente: ¿qué secuencia de bytes requiere cada comando y qué información devuelve la memoria Flash?
+La [Sección 1](#1-explicación-general-del-protocolo) explica cómo se transmiten los bits a través de las líneas de comunicación SPI. Esta sección aborda una cuestión diferente: ¿qué secuencia de bytes requiere cada comando y qué información devuelve la memoria Flash?
 
 Para facilitar la comparación entre los comandos, cada uno se describe mediante cuatro elementos:
 
@@ -274,9 +291,9 @@ Durante toda la transacción, la memoria Flash mantiene la salida `MISO` en alta
 
 **Nota de diseño.** Su estructura es idéntica a la de WREN. Puede reutilizarse la máquina de estados finitos (FSM) de transacciones de un solo byte, cambiando únicamente el código de operación.
 
-### 2.2.3 LRead Status Register 1 — RDSR1 (05h)
+### 2.2.3 Read Status Register 1 — RDSR1 (05h)
 
-**Propósito.** Leer el **registro de estado 1** (*Status Register 1*) de 8 bits, que contiene los dos indicadores que necesita consultar el firmware: `BUSY/WIP` (Write in Progres) y `WEL`. Este comando permite determinar si una operación de programación o borrado iniciada previamente ha finalizado.
+**Propósito.** Leer el **registro de estado 1** (*Status Register 1*) de 8 bits, que contiene los dos indicadores que necesita consultar el firmware: `BUSY/WIP` (Write in Progress) y `WEL`. Este comando permite determinar si una operación de programación o borrado iniciada previamente ha finalizado.
 
 **Secuencia de comunicación.**
 
@@ -382,7 +399,7 @@ Los comandos de lectura permiten recuperar datos de la matriz de memoria Flash. 
 
 ### 2.3.1 Read Data — READ (03h)
 
-**Propósito.** Leer uno o varios bytes de la matriz de memoria a partir de una dirección de 24 bits. El puntero de dirección interno avanza automáticamente, por lo que es posible leer toda la memoria mediante un único comando, siempre que `CS` permanezca en nivel bajo. La frecuencia máxima del reloj es de 50 MHz (véase la [Sección 1.7](#17-estructura-interna-de-la-memoria-flash)).
+**Propósito.** Leer uno o varios bytes de la matriz de memoria a partir de una dirección de 24 bits. El puntero de dirección interno avanza automáticamente, por lo que es posible leer toda la memoria mediante un único comando, siempre que `CS` permanezca en nivel bajo. La frecuencia máxima del reloj es de 50 MHz (véase la [Sección 1.8](#18-parámetros-de-tiempo-de-la-memoria)).
 
 **Secuencia de comunicación.**
 
@@ -449,6 +466,7 @@ sequenceDiagram
 7. `CS` pasa a nivel alto para finalizar la transacción.
 
 **Tabla de tramas.**
+
 ```mermaid
 sequenceDiagram
     participant FPGA as FPGA (Maestro)
@@ -463,6 +481,7 @@ sequenceDiagram
     FLASH-->>FPGA: D2...
     Note over FPGA,FLASH: CS sube
 ```
+
 | Fase | `MOSI` (FPGA → Flash) | `MISO` (Flash → FPGA) |
 |---|---|---|
 | Código de operación | `0Bh` | Alta impedancia |
@@ -546,14 +565,17 @@ CS baja
 → byte3
 CS sube
 ```
+
 Si la memoria almacena el valor con el byte más significativo en la dirección más baja, el valor de 32 bits se reconstruye como:
 
-```
+```c
 dato = ((uint32_t)byte0 << 24) |
        ((uint32_t)byte1 << 16) |
        ((uint32_t)byte2 <<  8) |
        ((uint32_t)byte3);
 ```
+
+</details>
 
 <details>
 <summary>¿Qué comandos deben ejecutarse antes o después de una operación de lectura, escritura o borrado?</summary>
@@ -569,6 +591,7 @@ La secuencia de comandos depende del tipo de operación que se quiera realizar:
 - **Comprobación de finalización:** después de una operación de escritura o borrado, se debe consultar el registro de estado mediante `RDSR1` (`05h`) hasta que el bit `WIP` vuelva a `0`. Esto indica que la memoria ha terminado la operación interna y puede aceptar una nueva operación compatible.
 
 En resumen, las operaciones de lectura pueden ejecutarse directamente, mientras que las operaciones de escritura y borrado requieren habilitar previamente la escritura y comprobar posteriormente que la operación ha finalizado.
+
 </details>
 
 <details>
@@ -590,7 +613,7 @@ Las cuatro funcionalidades comparten una estructura de comunicación común: el 
 
 ### 2.4.1 Page Program — PAGE_PROGRAM (02h)
 
-**Propósito.** Programar o  escribir entre 1 y 256 bytes de datos en una página de memoria, a partir de la dirección especificada. La programación solo permite cambiar bits de `1` a `0`; no es posible cambiar directamente bits de `0` a `1` mediante esta operación. Para sobrescribir datos arbitrarios, es necesario borrar previamente la región correspondiente.  En caso de que los datos enviados hacia el esclavo, lleguen al final de una pagina, los consecuentes se escribiran al inicio de la misma, y no pasaran a la siguiente pagina.
+**Propósito.** Programar o escribir entre 1 y 256 bytes de datos en una página de memoria, a partir de la dirección especificada. La programación solo permite cambiar bits de `1` a `0`; no es posible cambiar directamente bits de `0` a `1` mediante esta operación. Para sobrescribir datos arbitrarios, es necesario borrar previamente la región correspondiente. En caso de que los datos enviados hacia el esclavo lleguen al final de una página, los siguientes se escribirán al inicio de la misma y no pasarán a la siguiente página.
 
 **Secuencia de comunicación.**
 
@@ -716,7 +739,6 @@ Las cuatro funcionalidades comparten una estructura de comunicación común: el 
 
 **Nota de diseño.** Puede reutilizarse la estructura de control de `WREN`, adaptándola para gestionar la duración mucho mayor del borrado. Debido a que esta operación elimina todos los datos almacenados, el firmware debe advertir al usuario antes de ejecutarla y aplicar un tiempo de espera adecuado.
 
-
 ### 2.4.5 Uso práctico de los comandos de escritura y borrado
 
 El uso práctico de estos cuatro comandos comparte una estructura general. Antes de ejecutar cualquier operación de escritura o borrado, se debe enviar el comando `0x06` (Write Enable), el cual habilita la memoria para realizar este tipo de operaciones.
@@ -726,7 +748,6 @@ Posteriormente, se envía el comando correspondiente a la operación que se dese
 Una vez iniciada la operación, la memoria necesita un tiempo para completarla. Durante este proceso, se utiliza el comando `0x05` (Read Status Register) para consultar el estado de la memoria. Este comando puede repetirse hasta verificar que la operación haya finalizado. La información del registro de estado es enviada por la memoria hacia el maestro mediante la línea `MISO`. Este proceso se ilustra a continuación.
 
 ![Uso práctico de los comandos de escritura y borrado](cores/spi_flash/diagramas/Uso_practico_comandos_escritura_borrado.png)
-
 
 ---
 
@@ -738,15 +759,13 @@ El diagrama de flujo utilizado para representar esta secuencia se encuentra en l
 
 <img width="974" height="791" alt="image" src="https://github.com/user-attachments/assets/b6b0d694-05ea-479c-8434-ca92ab3afbae" />
 
-
 ---
 
 # 6. Diagramas internos
 
-Basandonos en lo explicado en este README y considerando la arquitectura propuesta por el profesor para la comunicacion entre el RV32I y la memoria flash, este seria el diagrama de entradas y salidas de su controlador.
+Basándonos en lo explicado en este README y considerando la arquitectura propuesta por el profesor para la comunicación entre el RV32I y la memoria flash, este sería el diagrama de entradas y salidas de su controlador.
 
 ![Diagrama de entradas y salidas](cores/spi_flash/diagramas/Diagrama_entradas_salidas.png)
-
 
 # 7. Diagramas de flujo
 
@@ -759,8 +778,6 @@ El siguiente diagrama de flujo explica la secuencia de pasos necesarios para rea
 ![diagrama de flujo para lectura de información](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash_simple.png)
 
 Para ver los registros de consulta de la CPU y una descripción más detallada de las variables del diagrama, vaya [aquí](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.pdf) o a [aquí](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.png) (formato png).
-
-
 
 ## 7.2 Borrado de información pedido por la CPU
 
@@ -782,13 +799,8 @@ Para ver los registros de consulta de la CPU y una descripción más detallada d
 - Edwin Franco Sanchez
 - Carlos Alfonso Mahecha Gonzalez
 
-
-
-
 # Esta plantilla no es de mi propiedad.
 
 Toda la documentación y diseño de esta plantilla se encuentra dentro del siguiente repositorio el cual **no me pertenece** y es propiedad del usuario [@cicamargo](https://github.com/cicamargoba).
 
 [Github de digital_UN](https://github.com/cicamargoba/digital_UN/tree/main/2026_1)
-
-
