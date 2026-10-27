@@ -11,7 +11,7 @@ Esta es la **única fuente** de las direcciones del módulo. Si una dirección c
 
 | Registro | addr | Acceso | Bits | Qué hace |
 |---|---|---|---|---|
-| `INIT` | `0x0007` | Escritura | `d_in` = X | Arranca la lectura: `BUSY` ← 1 y calcula `size_lec` y `size_lec_b` |
+| `LEC` | `0x0007` | Escritura | `d_in` = X | Arranca la lectura: `BUSY` ← 1 y calcula `size_lec` y `size_lec_b` |
 | `DIR_FIN` | `0x0008` | Escritura | `d_in[23:0]` | Guarda la dirección final en `buf_fin` |
 | `DIR_INI` | `0x0009` | Escritura | `d_in[23:0]` | Guarda la dirección en `buf_ini`: inicio de la lectura, o sector o bloque a borrar |
 | `DONE` | `0x0010` | Lectura | `d_out[0]` | Hay un paquete de 32 bits listo |
