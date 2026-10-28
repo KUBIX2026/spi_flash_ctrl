@@ -344,8 +344,7 @@ Una vez iniciada la operación, la memoria necesita un tiempo para completarla. 
 Esta sección presenta el **diagrama de flujo general del protocolo SPI para la memoria Flash**, mostrando de manera global la secuencia que sigue una transacción desde la activación de `CS` hasta su finalización.
 
 El diagrama de flujo utilizado para representar esta secuencia se encuentra en los archivos gráficos incluidos en este directorio.
-
-<img width="974" height="791" alt="image" src="https://github.com/user-attachments/assets/b6b0d694-05ea-479c-8434-ca92ab3afbae" />
+![diagrama de flujo de todos los usos de la memoria flash mediante SPI](cores/spi_flash/diagramas/Diagrama_flujo_uso_practico.png)
 
 
 ---
