@@ -519,6 +519,10 @@ El siguiente diagrama de flujo explica la secuencia de pasos necesarios para bor
 
 Para ver los registros de consulta de la CPU y una descripción más detallada de las variables del diagrama, vaya [aquí](cores/spi_flash/diagramas/diagrama_flujo_borrado_flash.pdf) o a [aquí](cores/spi_flash/diagramas/diagrama_flujo_borrado_flash.png) (formato png).
 
+## 7.3 EScritura de datos dados por la CPU
+
+https://raw.githubusercontent.com/KUBIX2026/spi_flash_ctrl/534095b9126173cd90a4e5dacffa5542ed97f334/diagrams/design/flow_write.svg
+
 # 8. Información extra
 
 ### Estructura del repo
