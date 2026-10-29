@@ -507,6 +507,8 @@ El siguiente diagrama de flujo explica la secuencia de pasos necesarios para rea
 
 Para ver los registros de consulta de la CPU y una descripción más detallada de las variables del diagrama, vaya [aquí](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.pdf) o a [aquí](cores/spi_flash/diagramas/diagrama_flujo_lectura_flash.png) (formato png).
 
+El siguiente diagrama explica la esecuencia para el comando FAST READ (0X0B)
+<img width="979" height="3483" alt="685469400-82b0364c-0aa4-4d93-8bfc-f7dcefd1feeb" src="https://github.com/user-attachments/assets/74e33cc5-7207-4251-9670-7ecb750ddd0b" />
 
 
 ## 7.2 Borrado de información pedido por la CPU
