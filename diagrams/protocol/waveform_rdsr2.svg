@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 440" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .signal-label { font-family: 'Arial', sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+      .note-text { font-family: 'Arial', sans-serif; font-size: 9px; fill: #666; }
+      .bit-val { font-family: 'Arial', sans-serif; font-size: 10px; fill: #333; }
+      .bit-lbl { font-family: 'Arial', sans-serif; font-size: 9px; fill: #333; }
+      .footer-text { font-family: 'Arial', sans-serif; font-size: 10px; fill: #666; }
+    </style>
+  </defs>
+
+  <!-- Título -->
+  <text x="525" y="25" text-anchor="middle" class="title">RDSR2 — Read Status Register 2 (35h)</text>
+
+  <!-- Etiquetas de las señales -->
+  <text x="15" y="85" class="signal-label">CS</text>
+  <text x="15" y="170" class="signal-label">CLK</text>
+  <text x="15" y="255" class="signal-label">MOSI</text>
+  <text x="15" y="375" class="signal-label">MISO</text>
+
+  <!-- Señal CS -->
+  <path d="M 100,75 L 130,75 L 130,95 L 1010,95 L 1010,75 L 1030,75" stroke="#333" stroke-width="2" fill="none"/>
+  <text x="115" y="68" class="note-text">HIGH</text>
+  <text x="560" y="115" text-anchor="middle" class="note-text">LOW (selected) — data returns continuously while CS is low</text>
+
+  <!-- Señal CLK -->
+  <path d="M 100,170 L 130,170 L 130,148 L 155,148 L 155,170 L 180,170 L 180,148 L 205,148 L 205,170 L 230,170 L 230,148 L 255,148 L 255,170 L 280,170 L 280,148 L 305,148 L 305,170 L 330,170 L 330,148 L 355,148 L 355,170 L 380,170 L 380,148 L 405,148 L 405,170 L 430,170 L 430,148 L 455,148 L 455,170 L 480,170 L 480,148 L 505,148 L 505,170 L 530,170 L 530,148 L 555,148 L 555,170 L 580,170 L 580,148 L 605,148 L 605,170 L 630,170 L 630,148 L 655,148 L 655,170 L 680,170 L 680,148 L 705,148 L 705,170 L 730,170 L 730,148 L 755,148 L 755,170 L 780,170 L 780,148 L 805,148 L 805,170 L 830,170 L 830,148 L 855,148 L 855,170 L 880,170 L 880,148 L 905,148 L 905,170 L 930,170 L 930,148 L 955,148 L 955,170 L 980,170 L 980,148 L 1005,148 L 1005,170 L 1010,170" stroke="#333" stroke-width="2" fill="none"/>
+
+  <!-- Líneas verticales de tiempo (Añadidas para mejorar la legibilidad) -->
+  <g stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,3">
+    <!-- Límites de bits MOSI -->
+    <line x1="130" y1="225" x2="130" y2="310" />
+    <line x1="180" y1="225" x2="180" y2="310" />
+    <line x1="230" y1="225" x2="230" y2="310" />
+    <line x1="280" y1="225" x2="280" y2="310" />
+    <line x1="330" y1="225" x2="330" y2="310" />
+    <line x1="380" y1="225" x2="380" y2="310" />
+    <line x1="430" y1="225" x2="430" y2="310" />
+    <line x1="480" y1="225" x2="480" y2="310" />
+    <line x1="530" y1="225" x2="530" y2="310" />
+    
+    <!-- Límites de bits MISO -->
+    <line x1="555" y1="340" x2="555" y2="395" />
+    <line x1="605" y1="340" x2="605" y2="395" />
+    <line x1="655" y1="340" x2="655" y2="395" />
+    <line x1="705" y1="340" x2="705" y2="395" />
+    <line x1="755" y1="340" x2="755" y2="395" />
+    <line x1="805" y1="340" x2="805" y2="395" />
+    <line x1="855" y1="340" x2="855" y2="395" />
+    <line x1="905" y1="340" x2="905" y2="395" />
+    <line x1="955" y1="340" x2="955" y2="395" />
+  </g>
+
+  <!-- Datos MOSI (Opcode 35h) -->
+  <rect x="130" y="240" width="400" height="30" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="330" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333">35h</text>
+
+  <text x="155" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="205" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="255" y="288" text-anchor="middle" class="bit-val">1</text>
+  <text x="305" y="288" text-anchor="middle" class="bit-val">1</text>
+  <text x="355" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="405" y="288" text-anchor="middle" class="bit-val">1</text>
+  <text x="455" y="288" text-anchor="middle" class="bit-val">0</text>
+  <text x="505" y="288" text-anchor="middle" class="bit-val">1</text>
+
+  <!-- Señal MISO (High-Z inicial) -->
+  <line x1="130" y1="370" x2="530" y2="370" stroke="#999" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="330" y="390" text-anchor="middle" class="footer-text">High-Z (Flash not yet driving)</text>
+
+  <!-- Datos MISO (Registro de Estado) -->
+  <rect x="555" y="355" width="400" height="30" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  
+  <!-- Valores de los bits MISO separados individualmente -->
+  <text x="580" y="375" text-anchor="middle" class="bit-lbl">S15</text>
+  <text x="630" y="375" text-anchor="middle" class="bit-lbl">S14</text>
+  <text x="680" y="375" text-anchor="middle" class="bit-lbl">S13</text>
+  <text x="730" y="375" text-anchor="middle" class="bit-lbl">S12</text>
+  <text x="780" y="375" text-anchor="middle" class="bit-lbl">S11</text>
+  <text x="830" y="375" text-anchor="middle" class="bit-lbl">S10</text>
+  <text x="880" y="375" text-anchor="middle" class="bit-lbl">S9</text>
+  <text x="930" y="375" text-anchor="middle" class="bit-lbl">S8</text>
+
+  <text x="755" y="410" text-anchor="middle" class="note-text" font-style="italic">(repeats every 8 clocks while CS is low)</text>
+
+  <!-- Nota final -->
+  <text x="525" y="432" text-anchor="middle" class="footer-text" font-style="italic">Opcode 35h on MOSI; the Flash starts driving MISO after the 8th opcode bit. Only S9 (QE) and S15 (SUS) are informational.</text>
+  
+</svg>

@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" width="100%" height="100%">
+  
+  <defs>
+    <style>
+      .title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #333; }
+      .signal-label { font-family: 'Arial', sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+      .note-text { font-family: 'Arial', sans-serif; font-size: 9px; fill: #666; }
+      .box-text { font-family: 'Arial', sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+      .footer-text { font-family: 'Arial', sans-serif; font-size: 10px; fill: #666; }
+    </style>
+  </defs>
+
+  <!-- Título -->
+  <text x="500" y="25" text-anchor="middle" class="title">SECTOR_ERASE — Sector Erase 4 KB (20h)</text>
+
+  <!-- Etiquetas de las señales -->
+  <text x="15" y="85" class="signal-label">CS</text>
+  <text x="15" y="170" class="signal-label">CLK</text>
+  <text x="15" y="255" class="signal-label">MOSI</text>
+  <text x="15" y="375" class="signal-label">MISO</text>
+
+  <!-- Señal CS -->
+  <path d="M 100,75 L 130,75 L 130,95 L 930,95 L 930,75 L 950,75" stroke="#333" stroke-width="2" fill="none"/>
+  <text x="115" y="68" class="note-text">HIGH</text>
+  <text x="530" y="115" text-anchor="middle" class="note-text">LOW (selected) — must end on a byte boundary</text>
+
+  <!-- Señal CLK (40 bits, 20 unidades por bit: 10 high, 10 low) -->
+  <path d="M 100,170 L 130,170 
+    L 130,148 L 140,148 L 140,170 L 150,170 
+    L 150,148 L 160,148 L 160,170 L 170,170 
+    L 170,148 L 180,148 L 180,170 L 190,170 
+    L 190,148 L 200,148 L 200,170 L 210,170 
+    L 210,148 L 220,148 L 220,170 L 230,170 
+    L 230,148 L 240,148 L 240,170 L 250,170 
+    L 250,148 L 260,148 L 260,170 L 270,170 
+    L 270,148 L 280,148 L 280,170 L 290,170 
+    L 290,148 L 300,148 L 300,170 L 310,170 
+    L 310,148 L 320,148 L 320,170 L 330,170 
+    L 330,148 L 340,148 L 340,170 L 350,170 
+    L 350,148 L 360,148 L 360,170 L 370,170 
+    L 370,148 L 380,148 L 380,170 L 390,170 
+    L 390,148 L 400,148 L 400,170 L 410,170 
+    L 410,148 L 420,148 L 420,170 L 430,170 
+    L 430,148 L 440,148 L 440,170 L 450,170 
+    L 450,148 L 460,148 L 460,170 L 470,170 
+    L 470,148 L 480,148 L 480,170 L 490,170 
+    L 490,148 L 500,148 L 500,170 L 510,170 
+    L 510,148 L 520,148 L 520,170 L 530,170 
+    L 530,148 L 540,148 L 540,170 L 550,170 
+    L 550,148 L 560,148 L 560,170 L 570,170 
+    L 570,148 L 580,148 L 580,170 L 590,170 
+    L 590,148 L 600,148 L 600,170 L 610,170 
+    L 610,148 L 620,148 L 620,170 L 630,170 
+    L 630,148 L 640,148 L 640,170 L 650,170 
+    L 650,148 L 660,148 L 660,170 L 670,170 
+    L 670,148 L 680,148 L 680,170 L 690,170 
+    L 690,148 L 700,148 L 700,170 L 710,170 
+    L 710,148 L 720,148 L 720,170 L 730,170 
+    L 730,148 L 740,148 L 740,170 L 750,170 
+    L 750,148 L 760,148 L 760,170 L 770,170 
+    L 770,148 L 780,148 L 780,170 L 790,170 
+    L 790,148 L 800,148 L 800,170 L 810,170 
+    L 810,148 L 820,148 L 820,170 L 830,170 
+    L 830,148 L 840,148 L 840,170 L 850,170 
+    L 850,148 L 860,148 L 860,170 L 870,170 
+    L 870,148 L 880,148 L 880,170 L 890,170 
+    L 890,148 L 900,148 L 900,170 L 910,170 
+    L 910,148 L 920,148 L 920,170 L 930,170" stroke="#333" stroke-width="2" fill="none"/>
+
+  <!-- Líneas verticales de tiempo (en el fondo para no cruzar los datos) -->
+  <g stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,3">
+    <line x1="130" y1="215" x2="130" y2="350" />
+    <line x1="290" y1="215" x2="290" y2="350" />
+    <line x1="450" y1="215" x2="450" y2="350" />
+    <line x1="610" y1="215" x2="610" y2="350" />
+    <line x1="770" y1="215" x2="770" y2="350" />
+    <line x1="930" y1="215" x2="930" y2="350" />
+  </g>
+
+  <!-- Datos MOSI -->
+  <rect x="130" y="240" width="160" height="30" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="210" y="260" text-anchor="middle" class="box-text">20h (opcode)</text>
+
+  <rect x="290" y="240" width="160" height="30" fill="#ffe6cc" stroke="#d79b00" stroke-width="1.5"/>
+  <text x="370" y="260" text-anchor="middle" class="box-text">A23…A16</text>
+
+  <rect x="450" y="240" width="160" height="30" fill="#ffe6cc" stroke="#d79b00" stroke-width="1.5"/>
+  <text x="530" y="260" text-anchor="middle" class="box-text">A15…A8</text>
+
+  <rect x="610" y="240" width="160" height="30" fill="#ffe6cc" stroke="#d79b00" stroke-width="1.5"/>
+  <text x="690" y="260" text-anchor="middle" class="box-text">A7…A0</text>
+
+  <rect x="770" y="240" width="160" height="30" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+  <text x="850" y="260" text-anchor="middle" class="box-text" font-style="italic" fill="#666">Don't care</text>
+
+  <!-- Datos MISO (High-Z) -->
+  <line x1="100" y1="365" x2="930" y2="365" stroke="#999" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="515" y="388" text-anchor="middle" class="footer-text">High-Z (Flash never drives MISO during erase)</text>
+
+  <!-- Nota final -->
+  <text x="500" y="425" text-anchor="middle" class="footer-text" font-style="italic">Requires preceding WREN. Only A23…A12 are decoded; low 12 bits ignored. Erases the whole 4 KB sector containing the address.</text>
+  
+</svg>
