@@ -288,8 +288,9 @@ Para cada comando se incluirá:
 5. **CS sube** al terminar.
 
 #### 3.3.2 Trama (diagrama Mermaid)
+<img width="652" height="613" alt="Diagrama sin título drawio(1)" src="https://github.com/user-attachments/assets/c887ce60-8861-457c-b1ac-15cabaf3ba0c" />
 
-```mermaid
+<!--```mermaid
 sequenceDiagram
     participant FPGA as FPGA (Maestro)
     participant FLASH as Flash (Esclavo)
@@ -301,7 +302,7 @@ sequenceDiagram
     FLASH-->>FPGA: D1
     FLASH-->>FPGA: D2
     FLASH-->>FPGA: D3...
-    Note over FPGA,FLASH: CS sube
+    Note over FPGA,FLASH: CS sube-->>
 ```
 
 #### 3.3.3 Tabla de la trama
@@ -316,7 +317,7 @@ sequenceDiagram
 
 **Ilimitada.** Mientras CS esté bajo, la Flash sigue sacando bytes y la dirección interna avanza sola. Al llegar al final, vuelve al inicio (**wrap around**).
 
-<!--> Cita de clase: *"hay que tener cuidado porque ese se sobrecribe… termina a los 64 espacios y vuelve a escribir el primer
+<!--> Cita de clase: *"hay que tener cuidado porque ese se sobrecribe… termina a los 64 espacios y vuelve a escribir en el primero
 
 ### 3.4 FAST READ (0x0B) paso a paso
 
@@ -330,8 +331,9 @@ sequenceDiagram
 6. **CS sube.**
 
 #### 3.4.2 Trama (diagrama Mermaid)
+<img width="652" height="663" alt="Diagrama sin título drawio(2)" src="https://github.com/user-attachments/assets/e4087282-507d-4115-b0ff-28b2ace9ec04" />
 
-```mermaid
+<!--```mermaid
 sequenceDiagram
     participant FPGA as FPGA (Maestro)
     participant FLASH as Flash (Esclavo)
@@ -343,7 +345,7 @@ sequenceDiagram
     FLASH-->>FPGA: D0
     FLASH-->>FPGA: D1
     FLASH-->>FPGA: D2...
-    Note over FPGA,FLASH: CS sube
+    Note over FPGA,FLASH: CS sube-->
 ```
 
 #### 3.4.3 Tabla de la trama
@@ -521,7 +523,7 @@ Para ver los registros de consulta de la CPU y una descripción más detallada d
 
 ## 7.3 EScritura de datos dados por la CPU
 
-https://raw.githubusercontent.com/KUBIX2026/spi_flash_ctrl/534095b9126173cd90a4e5dacffa5542ed97f334/diagrams/design/flow_write.svg
+<!--https://raw.githubusercontent.com/KUBIX2026/spi_flash_ctrl/534095b9126173cd90a4e5dacffa5542ed97f334/diagrams/design/flow_write.svg-->
 <img width="774" height="1200" alt="Diagrama sin título drawio" src="https://github.com/user-attachments/assets/a1aed6f5-5de7-45d2-b630-b758fb9a6612" />
 
 
