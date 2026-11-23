@@ -290,7 +290,9 @@ Para cada comando se incluirá:
 #### 3.3.2 Trama (diagrama Mermaid)
 <img width="652" height="613" alt="Diagrama sin título drawio(1)" src="https://github.com/user-attachments/assets/c887ce60-8861-457c-b1ac-15cabaf3ba0c" />
 
-<!--```mermaid
+```
+
+<!--mermaid
 sequenceDiagram
     participant FPGA as FPGA (Maestro)
     participant FLASH as Flash (Esclavo)
@@ -302,8 +304,9 @@ sequenceDiagram
     FLASH-->>FPGA: D1
     FLASH-->>FPGA: D2
     FLASH-->>FPGA: D3...
-    Note over FPGA,FLASH: CS sube
-```-->
+    Note over FPGA,FLASH: CS sube-->
+
+```
 
 #### 3.3.3 Tabla de la trama
 
@@ -333,7 +336,10 @@ sequenceDiagram
 #### 3.4.2 Trama (diagrama Mermaid)
 <img width="652" height="663" alt="Diagrama sin título drawio(2)" src="https://github.com/user-attachments/assets/e4087282-507d-4115-b0ff-28b2ace9ec04" />
 
-<!--```mermaid
+```
+
+
+<!--mermaid
 sequenceDiagram
     participant FPGA as FPGA (Maestro)
     participant FLASH as Flash (Esclavo)
@@ -346,6 +352,8 @@ sequenceDiagram
     FLASH-->>FPGA: D1
     FLASH-->>FPGA: D2...
     Note over FPGA,FLASH: CS sube-->
+
+
 ```
 
 #### 3.4.3 Tabla de la trama
