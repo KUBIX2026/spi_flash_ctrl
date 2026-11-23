@@ -302,8 +302,8 @@ sequenceDiagram
     FLASH-->>FPGA: D1
     FLASH-->>FPGA: D2
     FLASH-->>FPGA: D3...
-    Note over FPGA,FLASH: CS sube-->>
-```
+    Note over FPGA,FLASH: CS sube
+```-->
 
 #### 3.3.3 Tabla de la trama
 
