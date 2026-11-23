@@ -522,6 +522,8 @@ Para ver los registros de consulta de la CPU y una descripción más detallada d
 ## 7.3 EScritura de datos dados por la CPU
 
 https://raw.githubusercontent.com/KUBIX2026/spi_flash_ctrl/534095b9126173cd90a4e5dacffa5542ed97f334/diagrams/design/flow_write.svg
+<img width="774" height="1200" alt="Diagrama sin título drawio" src="https://github.com/user-attachments/assets/a1aed6f5-5de7-45d2-b630-b758fb9a6612" />
+
 
 # 8. Información extra
 
