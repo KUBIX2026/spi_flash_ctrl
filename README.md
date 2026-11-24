@@ -112,7 +112,7 @@ Durante toda la transacción, la memoria Flash mantiene la salida `MISO` en alta
 
 **Diagrama de tiempos.**
 
-![Forma de onda de WREN (06h)](diagrams/protocol/waveform_wren.svg)
+![Forma de onda de WREN (06h)](diagrams/protocol/waveform_wren.png)
 
 *Figura 1. WREN (`06h`). `CS` delimita la transacción, `CLK` permanece en nivel bajo durante el reposo (Modo 0), `MOSI` transmite `06h` = `0000 0110` y `MISO` permanece en alta impedancia.*
 
@@ -138,7 +138,7 @@ Durante toda la transacción, la memoria Flash mantiene la salida `MISO` en alta
 
 **Diagrama de tiempos.**
 
-![Forma de onda de WRDI (04h)](diagrams/protocol/waveform_wrdi.svg)
+![Forma de onda de WRDI (04h)](diagrams/protocol/waveform_wrdi.png)
 
 *Figura 2. WRDI (`04h`). Presenta la misma estructura temporal que WREN, pero utiliza el código de operación `04h` = `0000 0100`.*
 
@@ -167,7 +167,7 @@ Durante toda la transacción, la memoria Flash mantiene la salida `MISO` en alta
 
 **Diagrama de tiempos.**
 
-![Forma de onda de RDSR1 (05h)](diagrams/protocol/waveform_rdsr1.svg)
+![Forma de onda de RDSR1 (05h)](diagrams/protocol/waveform_rdsr1.png)
 
 *Figura 3. RDSR1 (`05h`). Después de recibir el código de operación, la memoria Flash transmite el registro de estado por `MISO` durante los ciclos de reloj posteriores.*
 
@@ -204,7 +204,7 @@ Durante toda la transacción, la memoria Flash mantiene la salida `MISO` en alta
 
 **Diagrama de tiempos.**
 
-![Forma de onda de RDSR2 (35h)](diagrams/protocol/waveform_rdsr2.svg)
+![Forma de onda de RDSR2 (35h)](diagrams/protocol/waveform_rdsr2.png)
 
 *Figura 4. RDSR2 (`35h`). Presenta la misma estructura temporal que RDSR1. Solo cambia el código de operación (`35h` = `0011 0101`) y el byte devuelto corresponde al registro de estado 2.*
 
@@ -240,7 +240,7 @@ Durante toda la transacción, la memoria Flash mantiene la salida `MISO` en alta
 
 **Diagrama de tiempos.**
 
-![Forma de onda de WRSR (01h)](diagrams/protocol/waveform_wrsr.svg)
+![Forma de onda de WRSR (01h)](diagrams/protocol/waveform_wrsr.png)
 
 *Figura 5. WRSR (`01h`). Se transmiten dos bytes por `MOSI`: el código de operación `01h`, seguido del byte de estado que se desea escribir. `MISO` permanece en alta impedancia.*
 
