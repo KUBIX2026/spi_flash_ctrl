@@ -501,7 +501,40 @@ El siguiente diagrama de flujo explica la secuencia de pasos necesaria para escr
 <img width="774" height="1200" alt="Diagrama sin título drawio" src="https://github.com/user-attachments/assets/a1aed6f5-5de7-45d2-b630-b758fb9a6612" />
 
 
-# 8. Información extra
+# 8. Implementación.
+
+Esta seccion esta distanada a la documentacion y exposicion de todos los diagramas necesarios para la implementacion del Modulo de Control para la memoria Flash (de ahora en adelante MCF), teniendo encuenta las necesidades y limitaciones del proyecto.
+
+Para implementar este modulo se propone una estructura dividida en 3 secciones, un modulo de comunicación con la CPU, un modulo de procesamiento de información y un modulo de comunicación con la memoria flash
+
+## 8.1. Diagramas de entrads y salidas
+
+### 8.1.1 Modulo RX/TX con la memoria flash
+
+El siguiente diagrama expone las entradas y salidas para el modulo RX/TX encargado de la comunicacion con la memoria Flash, las entradas y salidas del lado izquierdo del diagrama son dadas y entregadas tanto a la máquina de estados general, como al resto del MCF.
+![](cores/spi_flash/diagramas/implementacion/Diagrama_RXTX-Diagrama_entradas_salidas.png)
+Una version en formato .pdf se encuenta [aqui](cores/spi_flash/diagramas/implementacion/Diagrama_RXTX-Diagrama_entradas_salidas.pdf)
+
+### 8.1.2 Modulo de procesamiento de informacion
+
+### 8.1.3 Modulo RX/TX con la CPU
+
+## 8.2 Diagramas de Flujo
+
+### 8.2.1 Modulo RX/TX con la memoria flash
+
+El siguiente diagrama diagrama de flujo expone el funcionamiento del modul RX/TX con la memoria Flash.
+![](cores/spi_flash/diagramas/implementacion/Diagrama_RXTX-Diagrama_de_flujo.png)
+Una version en formato .pdf se encuentra [aqui](cores/spi_flash/diagramas/implementacion/Diagrama_RXTX-Diagrama_de_flujo.pdf)
+
+
+### 8.2.2 Modulo de procesamiento de informacion
+
+### 8.2.3 Modulo RX/TX con la CPU
+
+
+
+# 9. Información extra
 
 ### Estructura del repo
 
