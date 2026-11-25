@@ -288,7 +288,8 @@ Para cada comando se incluirá:
 5. **CS sube** al terminar.
 
 #### 3.3.2 Trama (diagrama Mermaid)
-<img width="652" height="613" alt="Diagrama sin título drawio(1)" src="https://github.com/user-attachments/assets/c887ce60-8861-457c-b1ac-15cabaf3ba0c" />
+![](cores/spi_flash/diagramas/715913390-c887ce60-8861-457c-b1ac-15cabaf3ba0c.png)
+<!-- <img width="652" height="613" alt="Diagrama sin título drawio(1)" src="https://github.com/user-attachments/assets/c887ce60-8861-457c-b1ac-15cabaf3ba0c" /> -->
 
 #### 3.3.3 Tabla de la trama
 
@@ -301,6 +302,7 @@ Para cada comando se incluirá:
 #### 3.3.4 ¿Cuánta información devuelve?
 
 **Ilimitada.** Mientras CS esté bajo, la Flash sigue sacando bytes y la dirección interna avanza sola. Al llegar al final, vuelve al inicio (**wrap around**).
+
 
 <!--> Cita de clase: *"hay que tener cuidado porque ese se sobrecribe… termina a los 64 espacios y vuelve a escribir en el primero
 
@@ -316,7 +318,8 @@ Para cada comando se incluirá:
 6. **CS sube.**
 
 #### 3.4.2 Trama (diagrama Mermaid)
-<img width="652" height="663" alt="Diagrama sin título drawio(2)" src="https://github.com/user-attachments/assets/e4087282-507d-4115-b0ff-28b2ace9ec04" />
+![](cores/spi_flash/diagramas/715918132-e4087282-507d-4115-b0ff-28b2ace9ec04.png)
+<!-- <img width="652" height="663" alt="Diagrama sin título drawio(2)" src="https://github.com/user-attachments/assets/e4087282-507d-4115-b0ff-28b2ace9ec04" /> -->
 
 #### 3.4.3 Tabla de la trama
 
