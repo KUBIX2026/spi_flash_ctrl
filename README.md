@@ -536,6 +536,17 @@ Una version en formato .pdf se encuentra [aqui](cores/spi_flash/diagramas/implem
 
 ### 8.2.3 Modulo RX/TX con la CPU
 
+## 8.3 Diagramas de bloques
+
+### 8.3.1 Modulo RX/TX con la memoria flash
+
+EL siguiente diagrama de bloques presenta la arquitectura del camino de datos y de las señales que recibe y entrega la máquina de control para el modulo RX/TX con la memoria flash las señales en **negrita** son externas a este modulo, y provienen tanto de la memoria flash como del resto del MCF. las señales en *texto incliado* son las que le entrega la máquina de control al camino de datos, y las señales en color $\color{red}\text{rojo}$ son la que le entrega el camino de datos a la máquina de control.
+
+![](cores/spi_flash/diagramas/implementacion/Diagramas_RXTX-Diagrama_bloques.png)
+
+### 8.3.2 Modulo de procesamiento de informacion
+
+### 8.3.3 Modulo RX/TX con la CPU
 
 
 # 9. Información extra
